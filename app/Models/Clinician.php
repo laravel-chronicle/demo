@@ -14,19 +14,19 @@ class Clinician extends Model
     /** @use HasFactory<ClinicianFactory> */
     use HasFactory;
 
-    //    /**
-    //     * @return HasMany<Encounter, $this>
-    //     */
-    //    public function encounters(): HasMany
-    //    {
-    //        return $this->hasMany(Encounter::class);
-    //    }
+    /**
+     * @return HasMany<Encounter, $this>
+     */
+    public function encounters(): HasMany
+    {
+        return $this->hasMany(Encounter::class);
+    }
 
-    //    /**
-    //     * @return HasMany<Prescription, $this>
-    //     */
-    //    public function prescriptions(): HasMany
-    //    {
-    //        return $this->hasMany(Prescription::class);
-    //    }
+    /**
+     * @return HasMany<Prescription, $this>
+     */
+    public function prescriptions(): HasMany
+    {
+        return $this->hasMany(Prescription::class);
+    }
 }
