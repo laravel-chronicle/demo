@@ -1,13 +1,16 @@
 <?php
 
 use App\Http\Controllers\PersonaController;
+use App\Livewire\Patients\Index as PatientsIndex;
+use App\Livewire\Patients\Show as PatientShow;
 use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'home')->name('home');
 
 Route::post('/persona', [PersonaController::class, 'store'])->name('persona.switch');
 
-Route::view('/patients', 'stub', ['title' => 'Patients'])->name('patients.index');
+Route::get('/patients', PatientsIndex::class)->name('patients.index');
+Route::get('/patients/{patient}', PatientShow::class)->name('patients.show');
 Route::view('/ledger', 'stub', ['title' => 'Ledger Explorer'])->name('ledger.index');
 Route::view('/lab', 'stub', ['title' => 'Integrity Lab'])->name('lab.index');
 Route::view('/auditors', 'stub', ['title' => 'For Auditors'])->name('auditors.index');
