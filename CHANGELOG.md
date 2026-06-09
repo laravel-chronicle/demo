@@ -23,6 +23,7 @@ breaking changes between any two versions — see upgrade notes per version.
 - Added the `Clinician` model and a seeder mapping the demo personas (Dr. Reyes / Nurse Okoro / Admin Vega) to real audited actors, resolved per-request by `CurrentClinician`.
 - Added `Patient`, `Encounter`, and `Prescription` models with automatic Chronicle auditing (create/update/delete + field diffs), attributed to the active clinician, plus deterministic planet-named synthetic seed data.
 - Added the Patients list screen (Livewire) linking through to each patient's detail page.
+- Added the Patient detail screen that records an explicit `patient.viewed` access event on view and renders the patient's live Chronicle audit trail (with actor, action, time, and diffs).
 
 ### Removed
 
