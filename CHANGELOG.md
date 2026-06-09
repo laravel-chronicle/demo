@@ -11,9 +11,15 @@ breaking changes between any two versions — see upgrade notes per version.
 ## [Unreleased]
 
 ### Added
+
 - Installed `laravel-chronicle/core ^1.11`; published config + migrations and migrated the ledger tables.
 - Enabled the read-only Chronicle UI (`CHRONICLE_UI_ENABLED=true`) with `web`-only middleware (no auth in the demo).
 - Generated a dev Ed25519 signing keypair wired via `CHRONICLE_PRIVATE_KEY` / `CHRONICLE_PUBLIC_KEY`.
 - Added no-auth demo personas (Dr. Reyes / Nurse Okoro / Admin Vega) with a session-backed `ResolveDemoPersona` middleware and `/persona` switch route.
 - Added the base Tailwind layout with a persistent "fictional data, resets hourly" banner, top nav, and a persona switcher.
 - Added stub pages for the Patients, Ledger, Integrity Lab, Auditors, and How-it-works screens.
+- Added the home landing page with the one-paragraph pitch and links to the repo and docs.
+
+### Removed
+
+- Removed the starter-kit `welcome` view.
