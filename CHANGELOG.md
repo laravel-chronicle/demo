@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to `laravel-chronicle` will be documented in this file.
+All notable changes to `laravel-chronicle/demo` will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/).
@@ -14,3 +14,4 @@ breaking changes between any two versions — see upgrade notes per version.
 - Installed `laravel-chronicle/core ^1.11`; published config + migrations and migrated the ledger tables.
 - Enabled the read-only Chronicle UI (`CHRONICLE_UI_ENABLED=true`) with `web`-only middleware (no auth in the demo).
 - Generated a dev Ed25519 signing keypair wired via `CHRONICLE_PRIVATE_KEY` / `CHRONICLE_PUBLIC_KEY`.
+- Added no-auth demo personas (Dr. Reyes / Nurse Okoro / Admin Vega) with a session-backed `ResolveDemoPersona` middleware and `/persona` switch route.
