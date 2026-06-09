@@ -1,5 +1,8 @@
 <?php
 
+use App\Models\Patient;
+use Database\Seeders\ClinicianSeeder;
+
 beforeEach(fn () => $this->withoutVite());
 
 it('boots and renders every public screen without error', function () {
@@ -15,4 +18,15 @@ it('boots and renders every public screen without error', function () {
 
 it('exposes a health check', function () {
     $this->get('/up')->assertOk();
+});
+
+it('renders a seeded patient detail with its audit trail', function () {
+    $this->seed(ClinicianSeeder::class);
+    $patient = Patient::factory()->create(['name' => 'Saturn Vesper']);
+
+    $this->get(route('patients.show', $patient))
+        ->assertOk()
+        ->assertSee('Saturn Vesper')
+        ->assertSee('Audit trail')
+        ->assertSee('patient.viewed');
 });
