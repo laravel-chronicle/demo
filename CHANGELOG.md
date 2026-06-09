@@ -19,7 +19,9 @@ breaking changes between any two versions — see upgrade notes per version.
 - Added the base Tailwind layout with a persistent "fictional data, resets hourly" banner, top nav, and a persona switcher.
 - Added stub pages for the Patients, Ledger, Integrity Lab, Auditors, and How-it-works screens.
 - Added the home landing page with the one-paragraph pitch and links to the repo and docs.
+- Added a scaffold smoke test asserting the app boots and every screen renders.
 
 ### Removed
 
 - Removed the starter-kit `welcome` view.
+- Removed the starter-kit example tests.
