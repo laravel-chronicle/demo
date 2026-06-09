@@ -1,11 +1,11 @@
 {
     "$schema": "https://getcomposer.org/schema.json",
-    "name": "laravel/blank-livewire-starter-kit",
+    "name": "laravel-chronicle/demo",
     "type": "project",
-    "description": "The official Laravel starter kit for Livewire.",
+    "description": "Demo application for Chronicle.",
     "keywords": [
         "laravel",
-        "framework"
+        "chronicle"
     ],
     "license": "MIT",
     "require": {
