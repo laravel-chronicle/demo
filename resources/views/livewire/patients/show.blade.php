@@ -13,6 +13,40 @@
             <div><dt class="text-gray-500">Allergies</dt><dd class="font-medium">{{ $patient->allergies ?: '—' }}</dd></div>
             <div class="col-span-2"><dt class="text-gray-500">Notes</dt><dd class="font-medium">{{ $patient->notes ?: '—' }}</dd></div>
         </dl>
+        <div class="mt-6 grid gap-4 md:grid-cols-3">
+            {{-- Edit allergies (auto patient.updated) --}}
+            <form wire:submit="saveAllergies" class="rounded-lg border border-gray-200 bg-white p-4">
+                <h3 class="text-sm font-semibold">Edit allergies</h3>
+                <input type="text" wire:model="allergies"
+                       class="mt-2 w-full rounded border border-gray-300 px-2 py-1 text-sm" />
+                @error('allergies') <p class="mt-1 text-xs text-red-600">{{ $message }}</p> @enderror
+                <button type="submit" class="mt-3 rounded bg-indigo-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-indigo-500">Save</button>
+            </form>
+
+            {{-- Prescribe (auto prescription.created) --}}
+            <form wire:submit="prescribe" class="rounded-lg border border-gray-200 bg-white p-4">
+                <h3 class="text-sm font-semibold">Prescribe</h3>
+                <input type="text" wire:model="drug" placeholder="Drug"
+                       class="mt-2 w-full rounded border border-gray-300 px-2 py-1 text-sm" />
+                @error('drug') <p class="mt-1 text-xs text-red-600">{{ $message }}</p> @enderror
+                <input type="text" wire:model="dose" placeholder="Dose"
+                       class="mt-2 w-full rounded border border-gray-300 px-2 py-1 text-sm" />
+                @error('dose') <p class="mt-1 text-xs text-red-600">{{ $message }}</p> @enderror
+                <button type="submit" class="mt-3 rounded bg-indigo-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-indigo-500">Prescribe</button>
+            </form>
+
+            {{-- Amend (explicit patient.amended) --}}
+            <form wire:submit="amend" class="rounded-lg border border-gray-200 bg-white p-4">
+                <h3 class="text-sm font-semibold">Amend record</h3>
+                <textarea wire:model="amendment" placeholder="Corrected notes"
+                          class="mt-2 w-full rounded border border-gray-300 px-2 py-1 text-sm" rows="2"></textarea>
+                @error('amendment') <p class="mt-1 text-xs text-red-600">{{ $message }}</p> @enderror
+                <input type="text" wire:model="amendmentReason" placeholder="Reason"
+                       class="mt-2 w-full rounded border border-gray-300 px-2 py-1 text-sm" />
+                @error('amendmentReason') <p class="mt-1 text-xs text-red-600">{{ $message }}</p> @enderror
+                <button type="submit" class="mt-3 rounded bg-amber-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-amber-500">Amend</button>
+            </form>
+        </div>
     </section>
 
     {{-- Live audit trail --}}

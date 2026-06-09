@@ -25,6 +25,16 @@ class Show extends Component
 {
     public Patient $patient;
 
+    public string $allergies = '';
+
+    public string $drug = '';
+
+    public string $dose = '';
+
+    public string $amendment = '';
+
+    public string $amendmentReason = '';
+
     /**
      * @throws CircularDependencyException
      * @throws Throwable
@@ -36,12 +46,82 @@ class Show extends Component
     {
         $this->patient = $patient;
 
+        $this->allergies = (string) $patient->allergies;
+
         Chronicle::record()
             ->actor(app(CurrentClinician::class)->get())
             ->action('patient.viewed')
             ->subject($patient)
             ->context(['ip' => request()->ip(), 'reason' => 'Opened patient detail'])
             ->commit();
+    }
+
+    public function saveAllergies(): void
+    {
+        $this->validate(['allergies' => ['required', 'string', 'max:255']]);
+
+        $this->patient->allergies = $this->allergies;
+        $this->patient->save(); // fires HasChronicle => 'patient.updated' with an automatic diff
+
+        session()->flash('status', 'Allergies updated.');
+    }
+
+    /**
+     * @throws CircularDependencyException
+     * @throws EntryNotFoundException
+     * @throws NotFoundExceptionInterface
+     * @throws ContainerExceptionInterface
+     */
+    public function prescribe(): void
+    {
+        $this->validate([
+            'drug' => ['required', 'string', 'max:255'],
+            'dose' => ['required', 'string', 'max:255'],
+        ]);
+
+        $this->patient->prescriptions()->create([
+            'clinician_id' => app(CurrentClinician::class)->get()->getKey(),
+            'drug' => $this->drug,
+            'dose' => $this->dose,
+            'status' => 'active',
+        ]); // fires HasChronicle => 'prescription.created'
+
+        $this->reset('drug', 'dose');
+        session()->flash('status', 'Prescription recorded.');
+    }
+
+    /**
+     * @throws CircularDependencyException
+     * @throws NotFoundExceptionInterface
+     * @throws EntryNotFoundException
+     * @throws Throwable
+     * @throws ContainerExceptionInterface
+     */
+    public function amend(): void
+    {
+        $this->validate([
+            'amendment' => ['required', 'string', 'max:1000'],
+            'amendmentReason' => ['required', 'string', 'max:255'],
+        ]);
+
+        $old = $this->patient->notes ?? '';
+
+        // A formal amendment: persist the change WITHOUT the automatic
+        // 'patient.updated' entry, then record an explicit, reason-bearing
+        // 'patient.amended' entry with a before/after diff.
+        $this->patient->notes = $this->amendment;
+        $this->patient->saveQuietly();
+
+        Chronicle::record()
+            ->actor(app(CurrentClinician::class)->get())
+            ->action('patient.amended')
+            ->subject($this->patient)
+            ->diff(['notes' => ['old' => $old, 'new' => $this->amendment]])
+            ->context(['reason' => $this->amendmentReason])
+            ->commit();
+
+        $this->reset('amendment', 'amendmentReason');
+        session()->flash('status', 'Record amended.');
     }
 
     public function render(): View
