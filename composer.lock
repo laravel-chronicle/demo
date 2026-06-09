@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a6a955fa656b7168ef2e390db9ee8dd1",
+    "content-hash": "908dd6cc251937f900dbd57d531f638b",
     "packages": [
         {
             "name": "brick/math",
@@ -1057,6 +1057,86 @@
                 }
             ],
             "time": "2026-05-23T22:00:21+00:00"
+        },
+        {
+            "name": "laravel-chronicle/core",
+            "version": "1.11.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel-chronicle/core.git",
+                "reference": "f48c53d4a446658b5718af2dc6b0cc135a24c6a4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel-chronicle/core/zipball/f48c53d4a446658b5718af2dc6b0cc135a24c6a4",
+                "reference": "f48c53d4a446658b5718af2dc6b0cc135a24c6a4",
+                "shasum": ""
+            },
+            "require": {
+                "ext-openssl": "*",
+                "ext-sodium": "*",
+                "illuminate/support": "^12.0||^13.0",
+                "php": "^8.2",
+                "symfony/process": "^7.0||^8.0"
+            },
+            "require-dev": {
+                "larastan/larastan": "^3.0",
+                "laravel/pint": "^1.14",
+                "orchestra/testbench": "^10.0||^11.0",
+                "pestphp/pest": "^3.0||^4.0",
+                "pestphp/pest-plugin-laravel": "^3.0||^4.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "aliases": {
+                        "chronicle": "Chronicle\\Facades\\Chronicle"
+                    },
+                    "providers": [
+                        "Chronicle\\ChronicleServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Chronicle\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Vasileios Ntoufoudis",
+                    "email": "info@ntoufoudis.com"
+                }
+            ],
+            "description": "Tamper-evident audit ledger for Laravel applications.",
+            "homepage": "https://github.com/laravel-chronicle/core",
+            "keywords": [
+                "Audit Log",
+                "Event Log",
+                "append-only log",
+                "audit trail",
+                "chronicle",
+                "compliance",
+                "hash chain",
+                "laravel",
+                "ledger",
+                "security"
+            ],
+            "support": {
+                "issues": "https://github.com/laravel-chronicle/core/issues",
+                "source": "https://github.com/laravel-chronicle/core/tree/1.11.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/ntoufoudis",
+                    "type": "github"
+                }
+            ],
+            "time": "2026-06-09T13:46:07+00:00"
         },
         {
             "name": "laravel/framework",
