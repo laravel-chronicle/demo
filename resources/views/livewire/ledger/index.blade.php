@@ -5,6 +5,10 @@
             <p class="mt-1 text-sm text-gray-600">
                 The raw Chronicle ledger — every audited entry, hash-chained in order.
             </p>
+            <a href="{{ route('chronicle.entries.index') }}"
+               class="mt-2 inline-block text-sm text-indigo-600 hover:underline">
+                Open the canonical Chronicle UI &rarr;
+            </a>
         </div>
         <button type="button" wire:click="verify" wire:loading.attr="disabled"
                 class="shrink-0 rounded bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-500 disabled:opacity-50">

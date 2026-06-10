@@ -30,3 +30,15 @@ it('renders a seeded patient detail with its audit trail', function () {
         ->assertSee('Audit trail')
         ->assertSee('patient.viewed');
 });
+
+it('renders the ledger explorer with seeded entries', function () {
+    $this->withoutVite();
+    $this->seed(ClinicianSeeder::class);
+    Patient::factory()->create(['name' => 'Saturn Vesper']);
+
+    $this->get(route('ledger.index'))
+        ->assertOk()
+        ->assertSee('Ledger Explorer')
+        ->assertSee('patient.created')
+        ->assertSee('Verify integrity');
+});

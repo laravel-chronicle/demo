@@ -52,3 +52,17 @@ it('shows a broken-at-entry failure with a reason when an entry is tampered', fu
         ->assertSee('Verification failed')
         ->assertSee('payload');
 });
+
+it('links to the canonical Chronicle UI', function () {
+    Patient::factory()->create();
+
+    $this->get(route('ledger.index'))
+        ->assertOk()
+        ->assertSee(route('chronicle.entries.index'));
+});
+
+it('can reach the canonical Chronicle UI', function () {
+    Patient::factory()->create();
+
+    $this->get(route('chronicle.entries.index'))->assertOk();
+});
