@@ -47,4 +47,13 @@
         </p>
         <livewire:lab.key-rotation />
     </section>
+
+    <section id="panel-4e" class="rounded-xl border border-gray-200 bg-white p-6">
+        <h2 class="text-lg font-semibold text-gray-900">4e · Full-compromise demo</h2>
+        <p class="mt-1 text-sm text-gray-600">
+            With a real RFC 3161 TSA anchor, forge the entire ledger and re-sign every checkpoint:
+            offline verification passes, but verifying against the external timestamp fails. The closer.
+        </p>
+        <livewire:lab.full-compromise />
+    </section>
 </div>

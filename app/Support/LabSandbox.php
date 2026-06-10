@@ -49,4 +49,21 @@ class LabSandbox
 
         File::delete($path);
     }
+
+    /**
+     * Delete external-anchor receipt rows for the given checkpoints. Used by the
+     * full-compromise panel so its TSA-anchored checkpoint resets cleanly.
+     *
+     * @param  list<string>  $checkpointIds
+     */
+    public function forgetAnchors(array $checkpointIds): void
+    {
+        if ($checkpointIds === []) {
+            return;
+        }
+
+        DB::table('chronicle_checkpoint_anchors')
+            ->whereIn('checkpoint_id', $checkpointIds)
+            ->delete();
+    }
 }
