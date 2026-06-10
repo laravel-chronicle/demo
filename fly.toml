@@ -1,0 +1,45 @@
+# Fly.io configuration for the MedLedger Chronicle demo.
+# SQLite lives on a single volume, so this app MUST stay at one machine.
+app = "medledger-demo"
+primary_region = "ams"
+
+[build]
+  dockerfile = "Dockerfile"
+
+[env]
+  APP_NAME = "MedLedger"
+  APP_ENV = "production"
+  APP_DEBUG = "false"
+  APP_URL = "https://medledger-demo.fly.dev"
+  LOG_CHANNEL = "stderr"
+  LOG_LEVEL = "info"
+  DB_CONNECTION = "sqlite"
+  DB_DATABASE = "/data/database.sqlite"
+  SESSION_DRIVER = "database"
+  CACHE_STORE = "database"
+  QUEUE_CONNECTION = "database"
+  CHRONICLE_UI_ENABLED = "true"
+
+# Persistent volume for the SQLite file. Create it once:
+#   fly volumes create medledger_data --size 1 --region ams
+[[mounts]]
+  source = "medledger_data"
+  destination = "/data"
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = false
+  auto_start_machines = true
+  min_machines_running = 1
+
+  [[http_service.checks]]
+    interval = "15s"
+    timeout = "2s"
+    grace_period = "10s"
+    method = "GET"
+    path = "/up"
+
+[[vm]]
+  size = "shared-cpu-1x"
+  memory = "512mb"

@@ -49,6 +49,7 @@ breaking changes between any two versions — see upgrade notes per version.
 - Throttled the remaining destructive Integrity Lab action (the full-lifecycle anchor step) per IP, so every tamper/rotate/anchor/compromise control is rate-limited for the public URL.
 - Extended the scaffold smoke test to assert the banner exposes the manual "Reset demo" control.
 - Added a multi-stage `Dockerfile` (Node asset build → FrankenPHP runtime serving classic Laravel, no Octane) plus a `docker/` Caddyfile, supervisord config, and entrypoint that run the web server and `schedule:work` together and seed the deterministic demo dataset on first boot. Added a `.dockerignore` that keeps `.env`, `.git`, `vendor`, `node_modules`, and the local SQLite file out of the build context.
+- Added `fly.toml` deploying the demo as a single FrankenPHP machine with a `/data` volume for the SQLite file (`DB_DATABASE=/data/database.sqlite`), an `/up` HTTP health check, forced HTTPS, and `min_machines_running = 1` (SQLite is single-writer, so the demo never scales past one machine).
 
 ### Fixed
 

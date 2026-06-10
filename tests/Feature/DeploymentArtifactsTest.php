@@ -37,3 +37,14 @@ it('keeps secrets and local artifacts out of the Docker build context', function
         ->toContain('vendor')
         ->toContain('database/database.sqlite');
 });
+
+it('configures Fly to persist SQLite on a volume and health-check the app', function () {
+    $fly = File::get(base_path('fly.toml'));
+
+    expect($fly)
+        ->toContain('destination = "/data"')
+        ->toContain('DB_DATABASE = "/data/database.sqlite"')
+        ->toContain('internal_port = 8080')
+        ->toContain('path = "/up"')
+        ->toContain('min_machines_running = 1');
+});
