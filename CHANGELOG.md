@@ -48,6 +48,7 @@ breaking changes between any two versions — see upgrade notes per version.
 - Added a manual "Reset demo" button in the banner (Livewire `ResetDemo`) that rebuilds the demo and redirects home, throttled to three resets per IP per hour. The throttle is stored in the file cache store so it survives the `migrate:fresh` that `demo:reset` performs.
 - Throttled the remaining destructive Integrity Lab action (the full-lifecycle anchor step) per IP, so every tamper/rotate/anchor/compromise control is rate-limited for the public URL.
 - Extended the scaffold smoke test to assert the banner exposes the manual "Reset demo" control.
+- Added a multi-stage `Dockerfile` (Node asset build → FrankenPHP runtime serving classic Laravel, no Octane) plus a `docker/` Caddyfile, supervisord config, and entrypoint that run the web server and `schedule:work` together and seed the deterministic demo dataset on first boot. Added a `.dockerignore` that keeps `.env`, `.git`, `vendor`, `node_modules`, and the local SQLite file out of the build context.
 
 ### Fixed
 
