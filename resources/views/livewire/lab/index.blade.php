@@ -27,6 +27,7 @@
             Step through generate activity → checkpoint → anchor → export → verify-export, with the
             signed artifact rendered at every step.
         </p>
+        <livewire:lab.lifecycle-stepper />
     </section>
 
     <section id="panel-4c" class="rounded-xl border border-gray-200 bg-white p-6">

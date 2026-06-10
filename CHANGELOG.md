@@ -33,6 +33,7 @@ breaking changes between any two versions — see upgrade notes per version.
 - Extended the scaffold smoke test to cover the Ledger Explorer rendering seeded entries with the Verify control.
 - Added the Integrity Lab host screen at `/lab`: a full-page Livewire shell introducing the four interactive panels (tampering simulator, full lifecycle, auditor view, key rotation).
 - Added Integrity Lab panel 4a (tampering simulator): pick a real audit entry, scrub it (raw DELETE) or alter it (raw UPDATE), and watch Verify localize the break to the exact entry with a before/after view and a one-click ledger reset.
+- Added Integrity Lab panel 4b (full lifecycle): a stepper that generates activity, creates a signed checkpoint, anchors it (NullAnchor, labelled non-production), exports a verifiable dataset, and verifies the export — each step rendering its artifact, with reset.
 
 ### Removed
 
