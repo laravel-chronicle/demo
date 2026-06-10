@@ -18,6 +18,7 @@
             Scrub or alter a real audit entry behind Chronicle's back, then watch Verify localize
             the break to the exact entry with the reason.
         </p>
+        <livewire:lab.tamper-simulator />
     </section>
 
     <section id="panel-4b" class="rounded-xl border border-gray-200 bg-white p-6">

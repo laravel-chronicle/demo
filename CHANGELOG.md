@@ -32,6 +32,7 @@ breaking changes between any two versions — see upgrade notes per version.
 - Linked the Ledger Explorer to Chronicle's canonical read-only Blade UI for the package's native entry browser.
 - Extended the scaffold smoke test to cover the Ledger Explorer rendering seeded entries with the Verify control.
 - Added the Integrity Lab host screen at `/lab`: a full-page Livewire shell introducing the four interactive panels (tampering simulator, full lifecycle, auditor view, key rotation).
+- Added Integrity Lab panel 4a (tampering simulator): pick a real audit entry, scrub it (raw DELETE) or alter it (raw UPDATE), and watch Verify localize the break to the exact entry with a before/after view and a one-click ledger reset.
 
 ### Removed
 
