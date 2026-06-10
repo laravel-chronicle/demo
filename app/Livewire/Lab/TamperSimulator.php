@@ -77,7 +77,7 @@ class TamperSimulator extends Component
             return;
         }
 
-        $this->snapshot = (array) $row;
+        $this->snapshot = $row->getAttributes();
         $this->snapshotWasDeleted = true;
 
         DB::table('chronicle_entries')->where('id', $row->id)->delete();
@@ -104,12 +104,12 @@ class TamperSimulator extends Component
             return;
         }
 
-        $this->snapshot = (array) $row;
+        $this->snapshot = $row->getAttributes();
         $this->snapshotWasDeleted = false;
 
         DB::table('chronicle_entries')
             ->where('id', $row->id)
-            ->update(['action' => ((string) $row->action).'.tampered']);
+            ->update(['action' => $row->action.'.tampered']);
 
         $this->attack = 'alter';
         $this->tampered = true;
@@ -143,16 +143,16 @@ class TamperSimulator extends Component
         $this->refreshBaseline($verifier);
     }
 
-    private function selectedRow(): ?object
+    private function selectedRow(): ?Entry
     {
         if ($this->selectedId === null) {
             return null;
         }
 
-        return DB::table('chronicle_entries')->where('id', $this->selectedId)->first();
+        return Entry::query()->find($this->selectedId);
     }
 
-    private function hasSuccessor(object $row): bool
+    private function hasSuccessor(Entry $row): bool
     {
         return DB::table('chronicle_entries')->where('sequence', '>', $row->sequence)->exists();
     }

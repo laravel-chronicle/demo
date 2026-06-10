@@ -21,7 +21,7 @@ it('starts from a valid baseline', function () {
 });
 
 it('breaks the chain with a scrub (raw delete) and localizes the failure', function () {
-    $middle = DB::table('chronicle_entries')->orderBy('sequence')->skip(2)->first();
+    $middle = DB::table('chronicle_entries')->orderBy('sequence')->skip(1)->first();
     $successor = DB::table('chronicle_entries')
         ->where('sequence', '>', $middle->sequence)->orderBy('sequence')->first();
 
@@ -52,7 +52,7 @@ it('breaks the chain with an alter (raw column update) and localizes the failure
 });
 
 it('restores the ledger on reset after a scrub', function () {
-    $middle = DB::table('chronicle_entries')->orderBy('sequence')->skip(2)->first();
+    $middle = DB::table('chronicle_entries')->orderBy('sequence')->skip(1)->first();
 
     $component = Livewire::test(TamperSimulator::class)
         ->call('selectEntry', $middle->id)
