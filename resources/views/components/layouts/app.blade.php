@@ -10,9 +10,10 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="min-h-full bg-gray-50 text-gray-900 antialiased">
-        {{-- Persistent honesty banner --}}
-        <div class="bg-amber-500 px-4 py-2 text-center text-sm font-medium text-amber-950">
-            Public demo — all data is fictional — resets hourly.
+        {{-- Persistent honesty banner + manual reset --}}
+        <div class="flex flex-wrap items-center justify-center gap-3 bg-amber-500 px-4 py-2 text-center text-sm font-medium text-amber-950">
+            <span>Public demo — all data is fictional — resets hourly.</span>
+            <livewire:reset-demo />
         </div>
 
         <header class="border-b border-gray-200 bg-white">
