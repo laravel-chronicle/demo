@@ -29,8 +29,8 @@ it('steps through checkpoint, anchor, export and verify-export with artifacts', 
         ->assertSee('Verified');
 
     expect($component->get('checkpoint'))->not->toBeNull()
-        ->and($component->get('anchor'))->not->toBeNull()
-        ->and($component->get('export'))->not->toBeNull();
+        ->and($component->get('anchorReceipt'))->not->toBeNull()
+        ->and($component->get('exportManifest'))->not->toBeNull();
 
     $checkpointId = $component->get('createdCheckpointId');
     expect(Checkpoint::query()->whereKey($checkpointId)->exists())->toBeTrue();
@@ -63,6 +63,6 @@ it('throttles the anchor action', function () {
         ->call('generateActivity')
         ->call('createCheckpoint')
         ->call('anchor')
-        ->assertSet('anchor', null)
+        ->assertSet('anchorReceipt', null)
         ->assertSet('throttleMessage', 'Too many attempts — please wait a moment and try again.');
 });

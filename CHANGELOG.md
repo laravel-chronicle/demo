@@ -49,6 +49,10 @@ breaking changes between any two versions — see upgrade notes per version.
 - Throttled the remaining destructive Integrity Lab action (the full-lifecycle anchor step) per IP, so every tamper/rotate/anchor/compromise control is rate-limited for the public URL.
 - Extended the scaffold smoke test to assert the banner exposes the manual "Reset demo" control.
 
+### Fixed
+
+- Fixed the Integrity Lab full-lifecycle panel (4b) where the Anchor and Export buttons silently did nothing in the browser: the `anchor`/`export` action methods collided with same-named public properties, which shadow the methods on Livewire's `$wire` proxy. Renamed the properties to `anchorReceipt`/`exportManifest`, and added a structural test asserting no Livewire component has a public property that shadows an action method.
+
 ### Removed
 
 - Removed the starter-kit `welcome` view.

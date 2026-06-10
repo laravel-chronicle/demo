@@ -52,27 +52,27 @@
             </div>
         @endif
 
-        @if ($anchor)
+        @if ($anchorReceipt)
             <div class="rounded border border-gray-200 bg-gray-50 px-4 py-3">
                 <dt class="font-semibold text-gray-700">
                     Anchor receipt
                     <span class="ml-1 rounded bg-amber-100 px-1.5 py-0.5 text-[10px] font-medium uppercase text-amber-800">non-production · NullAnchor</span>
                 </dt>
                 <dd class="mt-1 space-y-0.5 font-mono text-xs text-gray-600">
-                    <p>provider: {{ $anchor['provider'] }}</p>
-                    <p>proof: {{ Str::limit($anchor['proof'], 24) }}</p>
-                    <p>at: {{ $anchor['anchored_at'] }}</p>
+                    <p>provider: {{ $anchorReceipt['provider'] }}</p>
+                    <p>proof: {{ Str::limit($anchorReceipt['proof'], 24) }}</p>
+                    <p>at: {{ $anchorReceipt['anchored_at'] }}</p>
                 </dd>
             </div>
         @endif
 
-        @if ($export)
+        @if ($exportManifest)
             <div class="rounded border border-gray-200 bg-gray-50 px-4 py-3">
                 <dt class="font-semibold text-gray-700">Export manifest</dt>
                 <dd class="mt-1 space-y-0.5 font-mono text-xs text-gray-600">
-                    <p>entries: {{ $export['entry_count'] }}</p>
-                    <p>dataset hash: {{ Str::limit($export['dataset_hash'], 24) }}</p>
-                    <p>chain head: {{ Str::limit($export['chain_head'] ?? '—', 24) }}</p>
+                    <p>entries: {{ $exportManifest['entry_count'] }}</p>
+                    <p>dataset hash: {{ Str::limit($exportManifest['dataset_hash'], 24) }}</p>
+                    <p>chain head: {{ Str::limit($exportManifest['chain_head'] ?? '—', 24) }}</p>
                 </dd>
             </div>
         @endif

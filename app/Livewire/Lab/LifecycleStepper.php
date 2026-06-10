@@ -29,10 +29,10 @@ class LifecycleStepper extends Component
     public ?array $checkpoint = null;
 
     /** @var array<string, mixed>|null */
-    public ?array $anchor = null;
+    public ?array $anchorReceipt = null;
 
     /** @var array<string, mixed>|null */
-    public ?array $export = null;
+    public ?array $exportManifest = null;
 
     public bool $exportVerified = false;
 
@@ -84,7 +84,7 @@ class LifecycleStepper extends Component
         $checkpoint = Checkpoint::query()->findOrFail($this->createdCheckpointId);
         $receipt = (new NullAnchor)->anchor($checkpoint);
 
-        $this->anchor = [
+        $this->anchorReceipt = [
             'provider' => $receipt->provider,
             'reference' => $receipt->reference,
             'proof' => $receipt->proof,
@@ -108,7 +108,7 @@ class LifecycleStepper extends Component
         $result = $manager->export($path);
 
         $this->exportPath = $path;
-        $this->export = [
+        $this->exportManifest = [
             'path' => $path,
             'entry_count' => $result->entryCount,
             'dataset_hash' => $result->datasetHash,
@@ -138,7 +138,7 @@ class LifecycleStepper extends Component
 
         $sandbox->deletePath($this->exportPath);
 
-        $this->reset('step', 'generatedEntries', 'checkpoint', 'anchor', 'export',
+        $this->reset('step', 'generatedEntries', 'checkpoint', 'anchorReceipt', 'exportManifest',
             'exportVerified', 'createdCheckpointId', 'exportPath');
     }
 
