@@ -43,7 +43,7 @@ it('renders the ledger explorer with seeded entries', function () {
         ->assertSee('Verify integrity');
 });
 
-it('renders the integrity lab with all four interactive panels', function () {
+it('renders the integrity lab with all five panels', function () {
     $this->withoutVite();
     $this->seed(ClinicianSeeder::class);
     Patient::factory()->count(2)->create();
@@ -52,11 +52,13 @@ it('renders the integrity lab with all four interactive panels', function () {
         ->assertOk()
         ->assertSee('Integrity Lab')
         ->assertSee('Tampering simulator')   // 4a
-        ->assertSee('Scrub it')              // 4a control rendered by the nested panel
+        ->assertSee('Scrub it')              // 4a control
         ->assertSee('Full lifecycle')        // 4b
         ->assertSee('Generate activity')     // 4b control
         ->assertSee('Auditor view')          // 4c
         ->assertSee('Generate signed report')// 4c control
         ->assertSee('Key rotation')          // 4d
-        ->assertSee('Rotate to chronicle-key-2'); // 4d control
+        ->assertSee('Rotate to chronicle-key-2') // 4d control
+        ->assertSee('Full-compromise demo')  // 4e heading
+        ->assertSee('Configure a TSA to see this demo'); // 4e honest placeholder (no TSA in test env)
 });

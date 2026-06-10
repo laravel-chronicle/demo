@@ -41,6 +41,7 @@ breaking changes between any two versions — see upgrade notes per version.
 - Added an `App\Support\TsaAnchoring` gate that reports anchoring "configured" only when the provider is registered, a TSA URL is set, and the verification certificate exists on disk (so panel 4e shows an honest placeholder instead of a fake pass when no TSA is available). Anchoring is performed explicitly by the lab, not auto-dispatched on every checkpoint.
 - Added Integrity Lab panel 4e (full-compromise demo): builds a real RFC 3161 TSA-anchored ledger, then simulates an attacker with database and signing-key access — rewriting an entry's payload, recomputing the whole hash chain, and re-signing every checkpoint with a valid ring key. Offline verification (`--checkpoints-only`) passes the forgery, but verifying `--anchors` fails at the first anchored checkpoint because the TSA token binds the original digest. Shows an honest "configure a TSA" placeholder when no anchor is configured, and resets cleanly.
 - Added `LabSandbox::forgetAnchors()` to remove a checkpoint's external-anchor receipts during panel reset.
+- Extended the scaffold smoke test to cover the Integrity Lab rendering all five panels, including panel 4e's honest "configure a TSA" placeholder when no anchor is configured.
 
 ### Removed
 
