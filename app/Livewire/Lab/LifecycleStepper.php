@@ -77,7 +77,7 @@ class LifecycleStepper extends Component
 
     public function anchor(): void
     {
-        if ($this->createdCheckpointId === null) {
+        if ($this->createdCheckpointId === null || ! $this->passesThrottle('anchor')) {
             return;
         }
 
