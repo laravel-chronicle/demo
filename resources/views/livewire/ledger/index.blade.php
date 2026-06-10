@@ -6,7 +6,29 @@
                 The raw Chronicle ledger — every audited entry, hash-chained in order.
             </p>
         </div>
+        <button type="button" wire:click="verify" wire:loading.attr="disabled"
+                class="shrink-0 rounded bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-500 disabled:opacity-50">
+            <span wire:loading.remove wire:target="verify">Verify integrity</span>
+            <span wire:loading wire:target="verify">Verifying…</span>
+        </button>
     </div>
+
+    @if ($verified)
+        @if ($valid)
+            <div class="mt-4 flex items-center gap-2 rounded-md border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-800">
+                <span class="text-lg">✓</span>
+                <span>Ledger verified — {{ $checked }} {{ Str::plural('entry', $checked) }} checked, hash chain intact.</span>
+            </div>
+        @else
+            <div class="mt-4 rounded-md border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800">
+                <p class="flex items-center gap-2 font-semibold"><span class="text-lg">✗</span> Verification failed</p>
+                <p class="mt-1">{{ $failureReason }}</p>
+                @if ($failedEntryId)
+                    <p class="mt-1 font-mono text-xs">Broken at entry: {{ $failedEntryId }}</p>
+                @endif
+            </div>
+        @endif
+    @endif
 
     <div class="mt-6 overflow-hidden rounded-lg border border-gray-200 bg-white">
         <table class="min-w-full divide-y divide-gray-200 text-sm">

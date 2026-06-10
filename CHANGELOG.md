@@ -28,6 +28,7 @@ breaking changes between any two versions — see upgrade notes per version.
 - Extended the scaffold smoke test to cover a seeded patient detail rendering its live audit trail.
 - Added a `LedgerVerifier` service that runs Chronicle's integrity verification and returns a view-friendly `VerificationOutcome` (valid/checked count, or the failure code, breaking entry id, and a plain-English reason).
 - Added the Ledger Explorer screen: a paginated Livewire table of the Chronicle ledger showing chain position, action, actor, subject, and time.
+- Added a Verify button to the Ledger Explorer that runs Chronicle integrity verification and renders a clear ✓ valid (with entry count) or ✗ broken-at-entry banner with the failure reason.
 
 ### Removed
 

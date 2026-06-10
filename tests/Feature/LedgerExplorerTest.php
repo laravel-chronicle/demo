@@ -1,7 +1,10 @@
 <?php
 
+use App\Livewire\Ledger\Index;
 use App\Models\Patient;
 use Database\Seeders\ClinicianSeeder;
+use Illuminate\Support\Facades\DB;
+use Livewire\Livewire;
 
 beforeEach(function () {
     $this->withoutVite();
@@ -22,3 +25,30 @@ it('lists ledger entries with action, actor and chain position', function () {
 // Note on the actor assertion: a no-session `Patient::factory()->create()` resolves
 // `CurrentClinician` to the default persona (`physician` → "Dr. Reyes"), and the
 // table renders the clinician's *name* (not the word "Clinician") for Clinician actors.
+
+it('reports a valid ledger when Verify is pressed', function () {
+    Patient::factory()->count(2)->create();
+
+    Livewire::test(Index::class)
+        ->call('verify')
+        ->assertSet('verified', true)
+        ->assertSet('valid', true)
+        ->assertSee('Ledger verified');
+});
+
+it('shows a broken-at-entry failure with a reason when an entry is tampered', function () {
+    $patient = Patient::factory()->create();
+
+    $entry = DB::table('chronicle_entries')->orderBy('sequence')->first();
+    DB::table('chronicle_entries')
+        ->where('id', $entry->id)
+        ->update(['payload' => json_encode(['tampered' => true])]);
+
+    Livewire::test(Index::class)
+        ->call('verify')
+        ->assertSet('verified', true)
+        ->assertSet('valid', false)
+        ->assertSet('failedEntryId', $entry->id)
+        ->assertSee('Verification failed')
+        ->assertSee('payload');
+});
