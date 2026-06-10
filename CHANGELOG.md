@@ -42,6 +42,8 @@ breaking changes between any two versions — see upgrade notes per version.
 - Added Integrity Lab panel 4e (full-compromise demo): builds a real RFC 3161 TSA-anchored ledger, then simulates an attacker with database and signing-key access — rewriting an entry's payload, recomputing the whole hash chain, and re-signing every checkpoint with a valid ring key. Offline verification (`--checkpoints-only`) passes the forgery, but verifying `--anchors` fails at the first anchored checkpoint because the TSA token binds the original digest. Shows an honest "configure a TSA" placeholder when no anchor is configured, and resets cleanly.
 - Added `LabSandbox::forgetAnchors()` to remove a checkpoint's external-anchor receipts during panel reset.
 - Extended the scaffold smoke test to cover the Integrity Lab rendering all five panels, including panel 4e's honest "configure a TSA" placeholder when no anchor is configured.
+- Added the `demo:reset` artisan command: rebuilds the schema (`migrate:fresh`), reseeds the deterministic synthetic clinic dataset, creates two signed checkpoints, anchors the latest one when a TSA is configured, then verifies the ledger and prints a stable summary (non-zero exit if the rebuilt ledger does not verify).
+- Added a `LedgerCheckpointSeeder` (wired into `DatabaseSeeder`) that builds a small deterministic checkpoint history over the seeded activity so the Ledger explorer and Integrity Lab have substance immediately, anchoring the latest checkpoint only when `TsaAnchoring::configured()` (never a fake anchor).
 
 ### Removed
 

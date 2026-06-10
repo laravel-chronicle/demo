@@ -3,8 +3,6 @@
 use App\Livewire\Lab\FullCompromise;
 use App\Models\Patient;
 use App\Support\LedgerVerifier;
-use Chronicle\Anchoring\AnchorManager;
-use Chronicle\Anchoring\CheckpointAnchorer;
 use Chronicle\Checkpoints\Checkpoint;
 use Chronicle\Contracts\SigningProvider;
 use Chronicle\Signing\Ed25519SigningProvider;
@@ -13,7 +11,6 @@ use Chronicle\Verification\AnchorVerifier;
 use Chronicle\Verification\VerificationFailure;
 use Database\Seeders\ClinicianSeeder;
 use Livewire\Livewire;
-use Tests\Support\FakeTsaAnchor;
 
 beforeEach(function () {
     // Deterministic single-key ring (real Ed25519 keypair) so re-signing the
@@ -34,24 +31,6 @@ beforeEach(function () {
 
     $this->seed(ClinicianSeeder::class);
 });
-
-function configureFakeTsa(): void
-{
-    $cert = storage_path('app/lab/fake-tsa-cert.pem');
-    @mkdir(dirname($cert), 0775, true);
-    file_put_contents($cert, 'PEM');
-
-    config(['chronicle.anchoring.providers.rfc3161' => [
-        'provider' => FakeTsaAnchor::class,
-        'tsa_url' => 'https://tsa.test/tsr',
-        'tsa_certificate' => $cert,
-    ]]);
-    // AnchorManager is a fresh `bind`, but CheckpointAnchorer is a singleton that
-    // captures an AnchorManager at first resolution — forget it so it rebuilds
-    // against the fake provider config set above.
-    app()->forgetInstance(AnchorManager::class);
-    app()->forgetInstance(CheckpointAnchorer::class);
-}
 
 it('shows an honest placeholder when no TSA is configured', function () {
     config(['chronicle.anchoring.providers' => []]);
