@@ -35,6 +35,7 @@ breaking changes between any two versions — see upgrade notes per version.
 - Added Integrity Lab panel 4a (tampering simulator): pick a real audit entry, scrub it (raw DELETE) or alter it (raw UPDATE), and watch Verify localize the break to the exact entry with a before/after view and a one-click ledger reset.
 - Added Integrity Lab panel 4b (full lifecycle): a stepper that generates activity, creates a signed checkpoint, anchors it (NullAnchor, labelled non-production), exports a verifiable dataset, and verifies the export — each step rendering its artifact, with reset.
 - Added Integrity Lab panel 4c (auditor view): generate a date-range signed compliance report (with downloadable HTML and a signature-valid badge) plus an export bundle with an independent verify badge.
+- Added Integrity Lab panel 4d (key rotation): show the signing key ring, rotate to a second key (creating a boundary checkpoint), and verify that pre-rotation checkpoints still validate under the retired key while new checkpoints use the new key.
 
 ### Removed
 

@@ -45,5 +45,6 @@
             Rotate to a second signing key and confirm pre-rotation checkpoints still verify under
             the retired key while new checkpoints use the new one.
         </p>
+        <livewire:lab.key-rotation />
     </section>
 </div>

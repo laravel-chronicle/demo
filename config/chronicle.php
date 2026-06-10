@@ -137,6 +137,12 @@ return [
                 'private_key' => env('CHRONICLE_PRIVATE_KEY'),
                 'public_key' => env('CHRONICLE_PUBLIC_KEY'),
             ],
+            'chronicle-key-2' => [
+                'provider' => Ed25519SigningProvider::class,
+                'algorithm' => 'ed25519',
+                'private_key' => env('CHRONICLE_KEY2_PRIVATE_KEY'),
+                'public_key' => env('CHRONICLE_KEY2_PUBLIC_KEY'),
+            ],
         ],
     ],
 
