@@ -62,3 +62,12 @@ it('renders the integrity lab with all five panels', function () {
         ->assertSee('Full-compromise demo')  // 4e heading
         ->assertSee('Configure a TSA to see this demo'); // 4e honest placeholder (no TSA in test env)
 });
+
+it('shows the manual Reset demo control in the banner', function () {
+    $this->withoutVite();
+
+    $this->get(route('home'))
+        ->assertOk()
+        ->assertSee('Public demo — all data is fictional — resets hourly.')
+        ->assertSee('Reset demo');
+});

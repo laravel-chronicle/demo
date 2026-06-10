@@ -47,6 +47,7 @@ breaking changes between any two versions — see upgrade notes per version.
 - Scheduled `demo:reset` to run hourly so the public sandbox refreshes itself.
 - Added a manual "Reset demo" button in the banner (Livewire `ResetDemo`) that rebuilds the demo and redirects home, throttled to three resets per IP per hour. The throttle is stored in the file cache store so it survives the `migrate:fresh` that `demo:reset` performs.
 - Throttled the remaining destructive Integrity Lab action (the full-lifecycle anchor step) per IP, so every tamper/rotate/anchor/compromise control is rate-limited for the public URL.
+- Extended the scaffold smoke test to assert the banner exposes the manual "Reset demo" control.
 
 ### Removed
 
