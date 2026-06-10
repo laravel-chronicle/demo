@@ -37,6 +37,8 @@ breaking changes between any two versions — see upgrade notes per version.
 - Added Integrity Lab panel 4c (auditor view): generate a date-range signed compliance report (with downloadable HTML and a signature-valid badge) plus an export bundle with an independent verify badge.
 - Added Integrity Lab panel 4d (key rotation): show the signing key ring, rotate to a second key (creating a boundary checkpoint), and verify that pre-rotation checkpoints still validate under the retired key while new checkpoints use the new key.
 - Extended the scaffold smoke test to cover the Integrity Lab rendering all four interactive panels.
+- Configured the RFC 3161 TSA anchor (`Rfc3161TimestampAnchor`) against the free public freeTSA.org TSA, reading `CHRONICLE_TSA_URL` / `CHRONICLE_TSA_CERTIFICATE` from the environment, and shipped freeTSA's CA chain at `storage/tsa/cacert.pem` for offline token verification.
+- Added an `App\Support\TsaAnchoring` gate that reports anchoring "configured" only when the provider is registered, a TSA URL is set, and the verification certificate exists on disk (so panel 4e shows an honest placeholder instead of a fake pass when no TSA is available). Anchoring is performed explicitly by the lab, not auto-dispatched on every checkpoint.
 
 ### Removed
 

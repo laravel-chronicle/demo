@@ -1,5 +1,6 @@
 <?php
 
+use Chronicle\Anchoring\Rfc3161TimestampAnchor;
 use Chronicle\Signing\Ed25519SigningProvider;
 use Chronicle\Validation\ActionValidator;
 use Chronicle\Validation\ActorPresenceValidator;
@@ -164,11 +165,12 @@ return [
 
         // name => ['provider' => class, ...provider config]
         'providers' => [
-            // 'rfc3161' => [
-            //     'provider' => \Chronicle\Anchoring\Rfc3161TimestampAnchor::class,
-            //     'tsa_url' => env('CHRONICLE_TSA_URL'),
-            //     'tsa_certificate' => env('CHRONICLE_TSA_CERTIFICATE'), // path to PEM
-            // ],
+            'rfc3161' => [
+                'provider' => Rfc3161TimestampAnchor::class,
+                'tsa_url' => env('CHRONICLE_TSA_URL'),
+                // Defaults to the CA chain shipped in the repo; override via env if needed.
+                'tsa_certificate' => env('CHRONICLE_TSA_CERTIFICATE') ?: storage_path('tsa/cacert.pem'),
+            ],
         ],
     ],
 
