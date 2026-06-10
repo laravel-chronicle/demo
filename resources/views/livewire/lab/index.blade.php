@@ -36,6 +36,7 @@
             Generate a signed compliance report for a date range plus an export bundle, then verify
             both independently. The "hand this to an auditor" story.
         </p>
+        <livewire:lab.auditor-view />
     </section>
 
     <section id="panel-4d" class="rounded-xl border border-gray-200 bg-white p-6">
