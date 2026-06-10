@@ -31,6 +31,7 @@ breaking changes between any two versions — see upgrade notes per version.
 - Added a Verify button to the Ledger Explorer that runs Chronicle integrity verification and renders a clear ✓ valid (with entry count) or ✗ broken-at-entry banner with the failure reason.
 - Linked the Ledger Explorer to Chronicle's canonical read-only Blade UI for the package's native entry browser.
 - Extended the scaffold smoke test to cover the Ledger Explorer rendering seeded entries with the Verify control.
+- Added the Integrity Lab host screen at `/lab`: a full-page Livewire shell introducing the four interactive panels (tampering simulator, full lifecycle, auditor view, key rotation).
 
 ### Removed
 
