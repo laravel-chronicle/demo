@@ -26,6 +26,7 @@ breaking changes between any two versions — see upgrade notes per version.
 - Added the Patient detail screen that records an explicit `patient.viewed` access event on view and renders the patient's live Chronicle audit trail (with actor, action, time, and diffs).
 - Added inline edit, prescribe, and amend actions on the Patient detail screen that produce audited Chronicle entries with correct before/after diffs (amendments record a dedicated `patient.amended` action and never a generic update).
 - Extended the scaffold smoke test to cover a seeded patient detail rendering its live audit trail.
+- Added a `LedgerVerifier` service that runs Chronicle's integrity verification and returns a view-friendly `VerificationOutcome` (valid/checked count, or the failure code, breaking entry id, and a plain-English reason).
 
 ### Removed
 
