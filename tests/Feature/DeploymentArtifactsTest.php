@@ -68,3 +68,14 @@ it('documents the required production secrets and steps in DEPLOY.md', function 
         ->toContain('fly deploy')
         ->toContain('Forge');
 });
+
+it('explains the local run and links the docs in the README', function () {
+    $readme = File::get(base_path('README.md'));
+
+    expect($readme)
+        ->toContain('composer install')
+        ->toContain('demo:reset')
+        ->toContain('artisan serve')
+        ->toContain('Add a showcase')
+        ->toContain(config('demo.links.docs'));
+});
