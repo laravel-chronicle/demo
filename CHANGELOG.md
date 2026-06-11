@@ -10,6 +10,10 @@ breaking changes between any two versions — see upgrade notes per version.
 
 ## [Unreleased]
 
+---
+
+## [1.0.0] - 2026-06-11
+
 ### Added
 
 - Installed `laravel-chronicle/core ^1.11`; published config + migrations and migrated the ledger tables.
