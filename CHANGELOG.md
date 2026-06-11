@@ -50,6 +50,7 @@ breaking changes between any two versions — see upgrade notes per version.
 - Extended the scaffold smoke test to assert the banner exposes the manual "Reset demo" control.
 - Added a multi-stage `Dockerfile` (Node asset build → FrankenPHP runtime serving classic Laravel, no Octane) plus a `docker/` Caddyfile, supervisord config, and entrypoint that run the web server and `schedule:work` together and seed the deterministic demo dataset on first boot. Added a `.dockerignore` that keeps `.env`, `.git`, `vendor`, `node_modules`, and the local SQLite file out of the build context.
 - Added `fly.toml` deploying the demo as a single FrankenPHP machine with a `/data` volume for the SQLite file (`DB_DATABASE=/data/database.sqlite`), an `/up` HTTP health check, forced HTTPS, and `min_machines_running = 1` (SQLite is single-writer, so the demo never scales past one machine).
+- Added `DEPLOY.md`: a turnkey Fly.io deploy (launch, volume, secrets, `fly deploy`), how to enable real RFC 3161 TSA anchoring for panel 4e, and notes for Laravel Forge / Laravel Cloud (persistent disk for SQLite + running the scheduler). Includes the "generate production signing keys" reminder.
 
 ### Fixed
 

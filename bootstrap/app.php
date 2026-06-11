@@ -13,6 +13,12 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        // Fly.io terminates TLS at its edge and proxies plain HTTP to the
+        // container; trust its forwarded headers so Laravel detects HTTPS and
+        // generates https:// asset URLs (otherwise the browser blocks them as
+        // mixed content). The machine is only reachable through Fly's proxy.
+        $middleware->trustProxies(at: '*');
+
         $middleware->web(append: [
             ResolveDemoPersona::class,
         ]);

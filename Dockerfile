@@ -1,5 +1,5 @@
 # --- Stage 1: build the Vite/Tailwind assets ---
-FROM node:22-alpine as Assets
+FROM node:22-alpine AS assets
 WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm ci
@@ -46,10 +46,10 @@ COPY docker/entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
 
 # Writable dirs + the volume mount point
-RUN chmod -R ug+rwX storage boostrap/cache \
+RUN chmod -R ug+rwX storage bootstrap/cache \
     && mkdir -p /data
 
-ENV SERVER_NAME=8080
+ENV SERVER_NAME=:8080
 EXPOSE 8080
 
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]

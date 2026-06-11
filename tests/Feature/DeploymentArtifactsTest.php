@@ -11,6 +11,13 @@ it('ships a Dockerfile that builds assets and installs production-only dependenc
         ->toContain('frankenphp');
 });
 
+it('keeps Faker in production dependencies because demo:reset seeds at boot', function () {
+    $composer = json_decode(File::get(base_path('composer.json')), true);
+
+    expect($composer['require'])->toHaveKey('fakerphp/faker')
+        ->and($composer['require-dev'] ?? [])->not->toHaveKey('fakerphp/faker');
+});
+
 it('runs the scheduler alongside the web server in the container', function () {
     $supervisor = File::get(base_path('docker/supervisord.conf'));
 
@@ -24,7 +31,8 @@ it('seeds the demo dataset on first boot in the entrypoint', function () {
 
     expect($entrypoint)
         ->toContain('demo:reset')
-        ->toContain('config:cache');
+        ->toContain('config:cache')
+        ->toContain('migrate --force');
 });
 
 it('keeps secrets and local artifacts out of the Docker build context', function () {
@@ -42,9 +50,21 @@ it('configures Fly to persist SQLite on a volume and health-check the app', func
     $fly = File::get(base_path('fly.toml'));
 
     expect($fly)
-        ->toContain('destination = "/data"')
-        ->toContain('DB_DATABASE = "/data/database.sqlite"')
+        ->toContain("destination = '/data'")
+        ->toContain("DB_DATABASE = '/data/database.sqlite'")
         ->toContain('internal_port = 8080')
-        ->toContain('path = "/up"')
+        ->toContain("path = '/up'")
         ->toContain('min_machines_running = 1');
+});
+
+it('documents the required production secrets and steps in DEPLOY.md', function () {
+    $deploy = File::get(base_path('DEPLOY.md'));
+
+    expect($deploy)
+        ->toContain('APP_KEY')
+        ->toContain('chronicle:key:generate')
+        ->toContain('CHRONICLE_TSA_URL')
+        ->toContain('fly volumes create')
+        ->toContain('fly deploy')
+        ->toContain('Forge');
 });
