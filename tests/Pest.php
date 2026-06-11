@@ -1,6 +1,13 @@
 <?php
 
+use Chronicle\Anchoring\AnchorManager;
+use Chronicle\Anchoring\CheckpointAnchorer;
+use Chronicle\Contracts\SigningProvider;
+use Chronicle\Signing\Ed25519SigningProvider;
+use Chronicle\Signing\KeyRing;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\Support\FakeTsaAnchor;
 use Tests\TestCase;
 
 /*
@@ -18,20 +25,9 @@ pest()->extend(TestCase::class)
     ->use(RefreshDatabase::class)
     ->in('Feature');
 
-/*
-|--------------------------------------------------------------------------
-| Expectations
-|--------------------------------------------------------------------------
-|
-| When you're writing tests, you often need to check that values meet certain conditions. The
-| "expect()" function gives you access to a set of "expectations" methods that you can use
-| to assert different things. Of course, you may extend the Expectation API at any time.
-|
-*/
-
-expect()->extend('toBeOne', function () {
-    return $this->toBe(1);
-});
+pest()->extend(TestCase::class)
+    ->use(DatabaseMigrations::class)
+    ->in('Reset');
 
 /*
 |--------------------------------------------------------------------------
@@ -44,7 +40,46 @@ expect()->extend('toBeOne', function () {
 |
 */
 
-function something()
+/**
+ * Pin a deterministic single-key Ed25519 ring so checkpoint signing works in any
+ * environment (CI without a populated .env) and key ids are stable across tests.
+ */
+function pinSigningKey(): void
 {
-    // ..
+    config([
+        'chronicle.signing.active' => 'chronicle-dev-key',
+        'chronicle.signing.keys' => [
+            'chronicle-dev-key' => [
+                'provider' => Ed25519SigningProvider::class,
+                'algorithm' => 'ed25519',
+                'private_key' => '6ax+w8LH2V2GWU3YBPzi/6WNPpCQSYEZvzI+M0SMruuvRORm49DJuop8TRA6RNkRisac/Gta+ZwsvzFSbLUAhA==',
+                'public_key' => 'r0TkZuPQybqKfE0QOkTZEYrGnPxrWvmcLL8xUmy1AIQ=',
+            ],
+        ],
+    ]);
+    app()->forgetInstance(KeyRing::class);
+    app()->forgetInstance(SigningProvider::class);
+}
+
+/**
+ * Configure the deterministic RFC 3161 stand-in (Tests\Support\FakeTsaAnchor) so
+ * TsaAnchoring::configured() reports true and anchoring uses the fake provider —
+ * no network, no openssl. Shared by FullCompromiseTest and the reset tests.
+ */
+function configureFakeTsa(): void
+{
+    $cert = storage_path('app/lab/fake-tsa-cert.pem');
+    @mkdir(dirname($cert), 0775, true);
+    file_put_contents($cert, 'PEM');
+
+    config(['chronicle.anchoring.providers.rfc3161' => [
+        'provider' => FakeTsaAnchor::class,
+        'tsa_url' => 'https://tsa.test/tsr',
+        'tsa_certificate' => $cert,
+    ]]);
+    // AnchorManager is a fresh `bind`, but CheckpointAnchorer is a singleton that
+    // captures an AnchorManager at first resolution — forget it, so it rebuilds
+    // against the fake provider config set above.
+    app()->forgetInstance(AnchorManager::class);
+    app()->forgetInstance(CheckpointAnchorer::class);
 }
