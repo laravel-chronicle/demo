@@ -6,9 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
 Semantic versioning applies from **v1.0.0** onwards. Pre-1.0 releases may contain
-breaking changes between any two versions — see upgrade notes per version.
+breaking changes between any two versions - see upgrade notes per version.
 
 ## [Unreleased]
+
+### Added
+- Installed Filament (`filament/filament`) and the `laravel-chronicle/filament ^1.4` audit panel plugin; added `ext-zip` and bumped `laravel-chronicle/core` to `^1.13`. Ran the plugin migrations.
 
 ---
 
@@ -37,22 +40,22 @@ breaking changes between any two versions — see upgrade notes per version.
 - Extended the scaffold smoke test to cover the Ledger Explorer rendering seeded entries with the Verify control.
 - Added the Integrity Lab host screen at `/lab`: a full-page Livewire shell introducing the four interactive panels (tampering simulator, full lifecycle, auditor view, key rotation).
 - Added Integrity Lab panel 4a (tampering simulator): pick a real audit entry, scrub it (raw DELETE) or alter it (raw UPDATE), and watch Verify localize the break to the exact entry with a before/after view and a one-click ledger reset.
-- Added Integrity Lab panel 4b (full lifecycle): a stepper that generates activity, creates a signed checkpoint, anchors it (NullAnchor, labelled non-production), exports a verifiable dataset, and verifies the export — each step rendering its artifact, with reset.
+- Added Integrity Lab panel 4b (full lifecycle): a stepper that generates activity, creates a signed checkpoint, anchors it (NullAnchor, labelled non-production), exports a verifiable dataset, and verifies the export - each step rendering its artifact, with reset.
 - Added Integrity Lab panel 4c (auditor view): generate a date-range signed compliance report (with downloadable HTML and a signature-valid badge) plus an export bundle with an independent verify badge.
 - Added Integrity Lab panel 4d (key rotation): show the signing key ring, rotate to a second key (creating a boundary checkpoint), and verify that pre-rotation checkpoints still validate under the retired key while new checkpoints use the new key.
 - Extended the scaffold smoke test to cover the Integrity Lab rendering all four interactive panels.
 - Configured the RFC 3161 TSA anchor (`Rfc3161TimestampAnchor`) against the free public freeTSA.org TSA, reading `CHRONICLE_TSA_URL` / `CHRONICLE_TSA_CERTIFICATE` from the environment, and shipped freeTSA's CA chain at `storage/tsa/cacert.pem` for offline token verification.
 - Added an `App\Support\TsaAnchoring` gate that reports anchoring "configured" only when the provider is registered, a TSA URL is set, and the verification certificate exists on disk (so panel 4e shows an honest placeholder instead of a fake pass when no TSA is available). Anchoring is performed explicitly by the lab, not auto-dispatched on every checkpoint.
-- Added Integrity Lab panel 4e (full-compromise demo): builds a real RFC 3161 TSA-anchored ledger, then simulates an attacker with database and signing-key access — rewriting an entry's payload, recomputing the whole hash chain, and re-signing every checkpoint with a valid ring key. Offline verification (`--checkpoints-only`) passes the forgery, but verifying `--anchors` fails at the first anchored checkpoint because the TSA token binds the original digest. Shows an honest "configure a TSA" placeholder when no anchor is configured, and resets cleanly.
+- Added Integrity Lab panel 4e (full-compromise demo): builds a real RFC 3161 TSA-anchored ledger, then simulates an attacker with database and signing-key access - rewriting an entry's payload, recomputing the whole hash chain, and re-signing every checkpoint with a valid ring key. Offline verification (`--checkpoints-only`) passes the forgery, but verifying `--anchors` fails at the first anchored checkpoint because the TSA token binds the original digest. Shows an honest "configure a TSA" placeholder when no anchor is configured, and resets cleanly.
 - Added `LabSandbox::forgetAnchors()` to remove a checkpoint's external-anchor receipts during panel reset.
 - Extended the scaffold smoke test to cover the Integrity Lab rendering all five panels, including panel 4e's honest "configure a TSA" placeholder when no anchor is configured.
 - Added the `demo:reset` artisan command: rebuilds the schema (`migrate:fresh`), reseeds the deterministic synthetic clinic dataset, creates two signed checkpoints, anchors the latest one when a TSA is configured, then verifies the ledger and prints a stable summary (non-zero exit if the rebuilt ledger does not verify).
 - Added a `LedgerCheckpointSeeder` (wired into `DatabaseSeeder`) that builds a small deterministic checkpoint history over the seeded activity so the Ledger explorer and Integrity Lab have substance immediately, anchoring the latest checkpoint only when `TsaAnchoring::configured()` (never a fake anchor).
 - Scheduled `demo:reset` to run hourly so the public sandbox refreshes itself.
-- Added a manual "Reset demo" button in the banner (Livewire `ResetDemo`) that rebuilds the demo and redirects home, throttled to three resets per IP per hour. The throttle is stored in the file cache store so it survives the `migrate:fresh` that `demo:reset` performs.
+- Added a manual "Reset demo" button in the banner (Livewire `ResetDemo`) that rebuilds the demo and redirects home, throttled to three resets per IP per hour. The throttle is stored in the file cache store, so it survives the `migrate:fresh` that `demo:reset` performs.
 - Throttled the remaining destructive Integrity Lab action (the full-lifecycle anchor step) per IP, so every tamper/rotate/anchor/compromise control is rate-limited for the public URL.
 - Extended the scaffold smoke test to assert the banner exposes the manual "Reset demo" control.
-- Added a multi-stage `Dockerfile` (Node asset build → FrankenPHP runtime serving classic Laravel, no Octane) plus a `docker/` Caddyfile, supervisord config, and entrypoint that run the web server and `schedule:work` together and seed the deterministic demo dataset on first boot. Added a `.dockerignore` that keeps `.env`, `.git`, `vendor`, `node_modules`, and the local SQLite file out of the build context.
+- Added a multi-stage `Dockerfile` (Node asset build -> FrankenPHP runtime serving classic Laravel, no Octane) plus a `docker/` Caddyfile, supervisord config, and entrypoint that run the web server and `schedule:work` together and seed the deterministic demo dataset on first boot. Added a `.dockerignore` that keeps `.env`, `.git`, `vendor`, `node_modules`, and the local SQLite file out of the build context.
 - Added `fly.toml` deploying the demo as a single FrankenPHP machine with a `/data` volume for the SQLite file (`DB_DATABASE=/data/database.sqlite`), an `/up` HTTP health check, forced HTTPS, and `min_machines_running = 1` (SQLite is single-writer, so the demo never scales past one machine).
 - Added `DEPLOY.md`: a turnkey Fly.io deploy (launch, volume, secrets, `fly deploy`), how to enable real RFC 3161 TSA anchoring for panel 4e, and notes for Laravel Forge / Laravel Cloud (persistent disk for SQLite + running the scheduler). Includes the "generate production signing keys" reminder.
 - Added a `README.md` covering what the demo proves (Patients, Ledger Explorer, and the five Integrity Lab panels), a two-command local run, the live URL, a tamper-panel GIF placeholder, and an "Add a showcase" guide for contributors.

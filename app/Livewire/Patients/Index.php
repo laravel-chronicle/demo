@@ -10,7 +10,7 @@ use Livewire\Attributes\Title;
 use Livewire\Component;
 
 #[Layout('components.layouts.app')]
-#[Title('Patients — MedLedger')]
+#[Title('Patients - MedLedger')]
 class Index extends Component
 {
     public function render(): View

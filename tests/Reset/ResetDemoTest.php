@@ -32,5 +32,5 @@ it('throttles repeated resets per IP', function () {
     Livewire::test(ResetDemo::class)
         ->call('resetDemo')
         ->assertNoRedirect()
-        ->assertSet('message', 'The demo was reset recently — please wait before resetting again.');
+        ->assertSet('message', 'The demo was reset recently - please wait before resetting again.');
 });

@@ -72,7 +72,7 @@
                 <dd class="mt-1 space-y-0.5 font-mono text-xs text-gray-600">
                     <p>entries: {{ $exportManifest['entry_count'] }}</p>
                     <p>dataset hash: {{ Str::limit($exportManifest['dataset_hash'], 24) }}</p>
-                    <p>chain head: {{ Str::limit($exportManifest['chain_head'] ?? '—', 24) }}</p>
+                    <p>chain head: {{ Str::limit($exportManifest['chain_head'] ?? '-', 24) }}</p>
                 </dd>
             </div>
         @endif
@@ -81,7 +81,7 @@
     @if ($step >= 5)
         <div class="rounded-md border px-4 py-3 text-sm
             {{ $exportVerified ? 'border-green-200 bg-green-50 text-green-800' : 'border-red-200 bg-red-50 text-red-800' }}">
-            {{ $exportVerified ? '✓ Verified — the export reproduces the ledger and its signature checks out.' : '✗ Export verification failed.' }}
+            {{ $exportVerified ? '✓ Verified - the export reproduces the ledger and its signature checks out.' : '✗ Export verification failed.' }}
         </div>
     @endif
 </div>

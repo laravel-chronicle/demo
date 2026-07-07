@@ -13,7 +13,7 @@ use App\Livewire\ResetDemo;
  * before the method-call fallback, so the property value shadows the method and
  * `wire:click="name"` silently does nothing in the browser. Server-side
  * `->call('name')` bypasses the proxy and still works, which hides the bug from
- * ordinary component tests — hence this structural guard.
+ * ordinary component tests - hence this structural guard.
  */
 it('has no public property that shadows an action method on the $wire proxy', function (string $component) {
     $reflection = new ReflectionClass($component);

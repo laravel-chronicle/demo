@@ -12,8 +12,8 @@ use Throwable;
 /**
  * Builds a small, deterministic checkpoint history on top of the synthetic
  * clinic data so the Ledger explorer and the Integrity Lab have substance the
- * moment the demo loads: two signed checkpoints, and — only when a real external
- * anchor is configured (TsaAnchoring::configured()) — an anchored latest
+ * moment the demo loads: two signed checkpoints, and - only when a real external
+ * anchor is configured (TsaAnchoring::configured()) - an anchored latest
  * checkpoint so "Verify --anchors" has something to check. Never fakes an anchor.
  */
 class LedgerCheckpointSeeder extends Seeder

@@ -68,6 +68,6 @@ it('shows the manual Reset demo control in the banner', function () {
 
     $this->get(route('home'))
         ->assertOk()
-        ->assertSee('Public demo — all data is fictional — resets hourly.')
+        ->assertSee('Public demo - all data is fictional - resets hourly.')
         ->assertSee('Reset demo');
 });

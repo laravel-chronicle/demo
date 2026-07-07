@@ -33,7 +33,7 @@
             <dl class="mt-2 grid gap-x-6 gap-y-1 font-mono text-xs text-gray-600 sm:grid-cols-2">
                 <div><dt class="inline text-gray-400">entries:</dt> {{ $report['entry_count'] }}</div>
                 <div><dt class="inline text-gray-400">key:</dt> {{ $report['key_id'] }} ({{ $report['algorithm'] }})</div>
-                <div class="sm:col-span-2"><dt class="inline text-gray-400">chain head:</dt> {{ Str::limit($report['chain_head'] ?? '—', 40) }}</div>
+                <div class="sm:col-span-2"><dt class="inline text-gray-400">chain head:</dt> {{ Str::limit($report['chain_head'] ?? '-', 40) }}</div>
                 <div class="sm:col-span-2"><dt class="inline text-gray-400">report hash:</dt> {{ Str::limit($report['report_hash'], 40) }}</div>
                 <div class="sm:col-span-2"><dt class="inline text-gray-400">signature:</dt> {{ Str::limit($report['signature'], 40) }}</div>
             </dl>

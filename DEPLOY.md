@@ -2,7 +2,7 @@
 
 MedLedger is a single FrankenPHP container with a SQLite database on a persistent
 volume. The hourly `demo:reset` runs inside the container via `schedule:work`.
-Because SQLite is single-writer, the app **must stay at one machine** — never scale
+Because SQLite is single-writer, the app **must stay at one machine** - never scale
 it horizontally.
 
 ## Primary path: Fly.io
@@ -50,7 +50,7 @@ fly secrets set \
 
 ### 5. (Optional) Enable real RFC 3161 anchoring (panel 4e)
 
-Without these, the full-compromise panel shows an honest "configure a TSA" placeholder — never a fake pass. The freeTSA CA chain is committed at `storage/tsa/cacert.pem`.
+Without these, the full-compromise panel shows an honest "configure a TSA" placeholder - never a fake pass. The freeTSA CA chain is committed at `storage/tsa/cacert.pem`.
 
 ```bash
 fly secrets set \
@@ -64,7 +64,7 @@ fly secrets set \
 fly deploy
 ```
 
-The build runs the Dockerfile (asset build → FrankenPHP runtime). On first boot the entrypoint seeds the deterministic demo dataset, then supervisord starts FrankenPHP and the scheduler. Open the live URL:
+The build runs the Dockerfile (asset build -> FrankenPHP runtime). On first boot the entrypoint seeds the deterministic demo dataset, then supervisord starts FrankenPHP and the scheduler. Open the live URL:
 
 ```bash
 fly open
@@ -76,7 +76,7 @@ fly open
 - **Hourly reset:** `schedule:work` triggers `demo:reset` on the hour. To reset on
   demand: `fly ssh console -C "php /app/artisan demo:reset"`.
 - **Reset throttle:** the manual "Reset demo" button and the Integrity Lab throttles
-  use the file cache, which is per-container and resets on redeploy — expected for a
+  use the file cache, which is per-container and resets on redeploy - expected for a
   public sandbox.
 - **Logs:** `fly logs`.
 
@@ -90,5 +90,5 @@ The same environment variables apply. Two things to get right on a non-Fly host:
   `php artisan schedule:run` every minute (Forge: *Scheduler* tab; Laravel Cloud:
   enable the scheduler) so the hourly `demo:reset` fires.
 
-Generate fresh signing keys for production (`php artisan chronicle:key:generate`) —
+Generate fresh signing keys for production (`php artisan chronicle:key:generate`) -
 never reuse the development keys from `.env.example`.

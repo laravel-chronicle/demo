@@ -24,7 +24,7 @@ it('reports a valid outcome for an untampered ledger', function () {
 it('reports a failure with a human reason and the breaking entry id when an entry is tampered', function () {
     $patient = Patient::factory()->create();
 
-    // Raw UPDATE bypasses Eloquent's immutability guard — exactly how a real
+    // Raw UPDATE bypasses Eloquent's immutability guard - exactly how a real
     // tamper would look: the stored payload no longer matches its payload_hash.
     $entry = DB::table('chronicle_entries')->orderBy('sequence')->first();
     DB::table('chronicle_entries')

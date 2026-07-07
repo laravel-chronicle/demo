@@ -93,6 +93,9 @@ class LifecycleStepper extends Component
         $this->step = max($this->step, 3);
     }
 
+    /**
+     * @throws JsonException
+     */
     public function export(ExportManager $manager): void
     {
         if (! $this->passesThrottle('lifecycle')) {

@@ -69,6 +69,9 @@ class AuditorView extends Component
         );
     }
 
+    /**
+     * @throws JsonException
+     */
     public function buildExport(ExportManager $manager): void
     {
         $dir = $this->ensureDir();

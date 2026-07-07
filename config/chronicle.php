@@ -20,10 +20,10 @@ return [
     |
     | The driver Chronicle uses to persist audit entries. Built-in drivers:
     |
-    | 'eloquent' / 'database' — Synchronous write via Laravel's database layer. Default.
+    | 'eloquent' / 'database' - Synchronous write via Laravel's database layer. Default.
     | 'queued' - Async write via queue (single-worker required).
-    | 'array' — In-memory. For testing only.
-    | 'null' — Discards all entries silently. For testing or local dev.
+    | 'array' - In-memory. For testing only.
+    | 'null' - Discards all entries silently. For testing or local dev.
     |
     */
     'driver' => env('CHRONICLE_DRIVER', 'eloquent'),
@@ -35,7 +35,7 @@ return [
     |
     | The named database connection Chronicle uses for its tables. Set this if
     | you want Chronicle to use a dedicated database separate from your
-    | application — the recommended production setup.
+    | application - the recommended production setup.
     |
     | When null, the default Laravel connection is used.
     |
@@ -98,7 +98,7 @@ return [
         |
         | When true, Chronicle will throw a RuntimeException at boot if the
         | active signing key cannot be resolved (e.g. missing private key).
-        | Only the active key is validated — verify-only keys are not checked.
+        | Only the active key is validated - verify-only keys are not checked.
         |
         */
         'enforce_on_boot' => env('CHRONICLE_SIGNING_ENFORCE_ON_BOOT', false),
@@ -125,10 +125,10 @@ return [
         | their public_key to allow historic verification.
         |
         | Each entry requires:
-        |   provider   — a class implementing Chronicle\Contracts\SigningProvider
-        |   algorithm  — e.g. 'ed25519', 'ecdsa-p256'
-        |   public_key — base64-encoded public key (always required)
-        |   private_key — base64-encoded private key (omit or null for verify-only)
+        |   provider   - a class implementing Chronicle\Contracts\SigningProvider
+        |   algorithm  - e.g. 'ed25519', 'ecdsa-p256'
+        |   public_key - base64-encoded public key (always required)
+        |   private_key - base64-encoded private key (omit or null for verify-only)
         |
         */
         'keys' => [
@@ -220,14 +220,14 @@ return [
         PayloadSerializableValidator::class,
         PayloadSizeValidator::class,
 
-        // Optional context resolvers — uncomment to enable:
+        // Optional context resolvers - uncomment to enable:
         // \Chronicle\Context\EnvironmentContextResolver::class,
         // \Chronicle\Context\RequestContextResolver::class,
         // \Chronicle\Context\HostContextResolver::class,
         // \Chronicle\Context\ProcessContextResolver::class,
         // \Chronicle\Context\QueueContextResolver::class,
 
-        // Optional policies — uncomment to enable:
+        // Optional policies - uncomment to enable:
         // \Chronicle\Policy\OnlyAuthenticatedUsersPolicy::class,
         // \Chronicle\Policy\AllowedActionsPolicy::class,
         // \Chronicle\Policy\ForbiddenActionsPolicy::class,
@@ -247,7 +247,7 @@ return [
     | Routes are registered under `prefix` and protected by `middleware`.
     | The default middleware stack requires an authenticated web session.
     | Add your own guards (e.g. 'can:view-chronicle') to the array.
-    | Note: `middleware` is a plain PHP array — it is not driven by an env var
+    | Note: `middleware` is a plain PHP array - it is not driven by an env var
     | so that arbitrary middleware class names can be added.
     |
     | `per_page` controls how many entries appear per page on the index.

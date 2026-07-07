@@ -63,7 +63,7 @@ function pinSigningKey(): void
 
 /**
  * Configure the deterministic RFC 3161 stand-in (Tests\Support\FakeTsaAnchor) so
- * TsaAnchoring::configured() reports true and anchoring uses the fake provider —
+ * TsaAnchoring::configured() reports true and anchoring uses the fake provider -
  * no network, no openssl. Shared by FullCompromiseTest and the reset tests.
  */
 function configureFakeTsa(): void
@@ -78,7 +78,7 @@ function configureFakeTsa(): void
         'tsa_certificate' => $cert,
     ]]);
     // AnchorManager is a fresh `bind`, but CheckpointAnchorer is a singleton that
-    // captures an AnchorManager at first resolution — forget it, so it rebuilds
+    // captures an AnchorManager at first resolution - forget it, so it rebuilds
     // against the fake provider config set above.
     app()->forgetInstance(AnchorManager::class);
     app()->forgetInstance(CheckpointAnchorer::class);
