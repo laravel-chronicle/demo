@@ -13,6 +13,7 @@ breaking changes between any two versions - see upgrade notes per version.
 ### Added
 - Installed Filament (`filament/filament`) and the `laravel-chronicle/filament ^1.4` audit panel plugin; added `ext-zip` and bumped `laravel-chronicle/core` to `^1.13`. Ran the plugin migrations.
 - Registered a dedicated Filament `audit` panel served at `/audit` (replacing the default scaffolded admin panel).
+- Made the audit panel publicly browsable by auto-authenticating a seeded read-only demo user (`auditor@medledger.test`) via panel middleware - no login wall.
 
 ---
 
