@@ -16,6 +16,11 @@ breaking changes between any two versions - see upgrade notes per version.
 - Made the audit panel publicly browsable by auto-authenticating a seeded read-only demo user (`auditor@medledger.test`) via panel middleware - no login wall.
 - Enabled the Chronicle plugin's read-only surfaces on the audit panel: verification, anchoring, signing keys, crypto-shredding, exports, and reporting. Left the verify gate at its default; the GDPR erase action is deferred to a later session.
 
+
+### Changed
+
+- Repointed the "For Auditors" navigation entry from a stub page to the new `/audit` Filament panel.
+
 ---
 
 ## [1.0.0] - 2026-06-11

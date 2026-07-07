@@ -6,7 +6,7 @@ use Database\Seeders\ClinicianSeeder;
 beforeEach(fn () => $this->withoutVite());
 
 it('boots and renders every public screen without error', function () {
-    $routes = ['home', 'patients.index', 'ledger.index', 'lab.index', 'auditors.index', 'how.it.works'];
+    $routes = ['home', 'patients.index', 'ledger.index', 'lab.index', 'how.it.works'];
 
     foreach ($routes as $name) {
         $this->get(route($name))

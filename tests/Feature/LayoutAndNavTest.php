@@ -3,7 +3,7 @@
 beforeEach(fn () => $this->withoutVite());
 
 it('renders every nav screen as a reachable stub', function () {
-    foreach (['patients.index', 'ledger.index', 'lab.index', 'auditors.index', 'how.it.works'] as $name) {
+    foreach (['patients.index', 'ledger.index', 'lab.index', 'how.it.works'] as $name) {
         $this->get(route($name))->assertOk();
     }
 });

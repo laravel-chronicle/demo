@@ -25,3 +25,7 @@ it('registers the chronicle plugin on the audit panel', function () {
     // Substitute the real plugin id string from the discovered plugin class::getId().
     expect($panel->hasPlugin('chronicle-filament'))->toBeTrue();
 });
+
+it('redirects the For Auditors front door to the audit panel', function () {
+    $this->get(route('auditors.index'))->assertRedirect('/audit');
+});
