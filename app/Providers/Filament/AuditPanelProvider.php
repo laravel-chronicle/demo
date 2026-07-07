@@ -3,6 +3,7 @@
 namespace App\Providers\Filament;
 
 use App\Http\Middleware\AutoLoginDemoUser;
+use Chronicle\Filament\ChronicleFilamentPlugin;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -44,6 +45,15 @@ class AuditPanelProvider extends PanelProvider
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
                 AutoLoginDemoUser::class,
-            ]);
+            ])
+            ->plugin(
+                ChronicleFilamentPlugin::make()
+                    ->verification(true)
+                    ->anchoring(true)
+                    ->signingKeys(true)
+                    ->cryptoShredding(true)
+                    ->exports(true)
+                    ->reporting(true)
+            );
     }
 }

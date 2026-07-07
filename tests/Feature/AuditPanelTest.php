@@ -18,3 +18,10 @@ it('lets anyone browse the audit panel without logging in', function () {
     $response->assertOk();
     expect(auth()->check())->toBeTrue();
 });
+
+it('registers the chronicle plugin on the audit panel', function () {
+    $panel = Filament::getPanel('audit');
+
+    // Substitute the real plugin id string from the discovered plugin class::getId().
+    expect($panel->hasPlugin('chronicle-filament'))->toBeTrue();
+});

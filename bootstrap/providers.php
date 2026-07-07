@@ -1,6 +1,9 @@
 <?php
 
+use App\Providers\AppServiceProvider;
+use App\Providers\Filament\AuditPanelProvider;
+
 return [
-    App\Providers\AppServiceProvider::class,
-    App\Providers\Filament\AuditPanelProvider::class,
+    AppServiceProvider::class,
+    AuditPanelProvider::class,
 ];
