@@ -6,13 +6,13 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
-        <title>{{ $title ?? 'MedLedger — Chronicle Demo' }}</title>
+        <title>{{ $title ?? 'MedLedger - Chronicle Demo' }}</title>
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="min-h-full bg-gray-50 text-gray-900 antialiased">
         {{-- Persistent honesty banner + manual reset --}}
         <div class="flex flex-wrap items-center justify-center gap-3 bg-amber-500 px-4 py-2 text-center text-sm font-medium text-amber-950">
-            <span>Public demo — all data is fictional — resets hourly.</span>
+            <span>Public demo - all data is fictional - resets hourly.</span>
             <livewire:reset-demo />
         </div>
 

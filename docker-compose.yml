@@ -1,0 +1,27 @@
+# Deploys the MedLedger demo behind an existing Traefik reverse proxy.
+# Traefik terminates TLS; this container serves plain HTTP on :8080.
+
+services:
+    app:
+        image: ghcr.io/laravel-chronicle/demo:latest
+        restart: unless-stopped
+        env_file:
+            - path: .env.production
+              required: true
+        volumes:
+            - medledger_data:/data
+        networks:
+            - traefik
+        healthcheck:
+            test: ["CMD", "curl", "-fsS", "http://localhost:8080/up"]
+            interval: 15s
+            timeout: 3s
+            retries: 5
+            start_period: 30s
+
+volumes:
+    medledger_data:
+
+networks:
+    traefik:
+        external: true

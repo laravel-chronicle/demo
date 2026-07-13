@@ -8,11 +8,11 @@ use Chronicle\Checkpoints\Checkpoint;
 use Chronicle\Contracts\AnchorProvider;
 
 /**
- * A deterministic stand-in for the RFC 3161 TSA used in tests — the "recorded
+ * A deterministic stand-in for the RFC 3161 TSA used in tests - the "recorded
  * token fixture" the spec calls for. anchor() records the checkpoint digest the
  * (pretend) timestamp token covers; verify() passes only while the checkpoint's
- * digest still equals it. This reproduces the real anchor's guarantee — the TSA
- * token binds the original digest and cannot be re-issued by an attacker — with
+ * digest still equals it. This reproduces the real anchor's guarantee - the TSA
+ * token binds the original digest and cannot be re-issued by an attacker - with
  * no HTTP and no openssl, so it is stable in CI.
  *
  * @param  array<string, mixed>  $config

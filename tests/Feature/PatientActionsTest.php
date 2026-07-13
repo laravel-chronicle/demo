@@ -2,6 +2,7 @@
 
 use App\Livewire\Patients\Show;
 use App\Models\Patient;
+use Chronicle\Encryption\EntryDecryptor;
 use Chronicle\Facades\Chronicle;
 use Database\Seeders\ClinicianSeeder;
 use Livewire\Livewire;
@@ -18,8 +19,10 @@ it('audits an allergy edit with a diff (auto patient.updated)', function () {
 
     $entry = Chronicle::query()->forSubject($patient)->action('patient.updated')->latest()->first();
 
-    expect($entry->diff['allergies']['old'])->toBe('None')
-        ->and($entry->diff['allergies']['new'])->toBe('Penicillin');
+    $diff = app(EntryDecryptor::class)->field($entry, 'diff');
+
+    expect($diff['allergies']['old'])->toBe('None')
+        ->and($diff['allergies']['new'])->toBe('Penicillin');
 });
 
 it('audits a new prescription (auto prescription.created)', function () {
@@ -48,9 +51,13 @@ it('audits an amendment with a before/after diff and reason', function () {
 
     $entry = Chronicle::query()->forSubject($patient)->action('patient.amended')->first();
 
-    expect($entry->diff['notes']['old'])->toBe('Original note.')
-        ->and($entry->diff['notes']['new'])->toBe('Corrected note.')
-        ->and($entry->context['reason'])->toBe('Fixed a transcription error')
+    $decryptor = app(EntryDecryptor::class);
+    $diff = $decryptor->field($entry, 'diff');
+    $context = $decryptor->field($entry, 'context');
+
+    expect($diff['notes']['old'])->toBe('Original note.')
+        ->and($diff['notes']['new'])->toBe('Corrected note.')
+        ->and($context['reason'])->toBe('Fixed a transcription error')
         ->and($patient->refresh()->notes)->toBe('Corrected note.');
 });
 

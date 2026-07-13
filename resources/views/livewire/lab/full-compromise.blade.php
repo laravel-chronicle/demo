@@ -20,7 +20,7 @@
 
         <p class="text-sm text-gray-600">
             An attacker with <strong>database and signing-key access</strong> rewrites the ledger and re-signs
-            every checkpoint. Offline verification can't catch them — but the external timestamp can, because the
+            every checkpoint. Offline verification can't catch them - but the external timestamp can, because the
             TSA already signed the <em>original</em> digest and the attacker can't re-issue that.
         </p>
 
@@ -58,7 +58,7 @@
                 <dl class="mt-2 space-y-0.5 font-mono text-xs text-gray-600">
                     <div><dt class="inline text-gray-400">checkpoint:</dt> {{ $createdCheckpointId }}</div>
                     <div><dt class="inline text-gray-400">tsa:</dt> {{ $anchor['reference'] }}</div>
-                    <div><dt class="inline text-gray-400">token:</dt> {{ Str::limit($anchor['proof'] ?? '—', 48) }}</div>
+                    <div><dt class="inline text-gray-400">token:</dt> {{ Str::limit($anchor['proof'] ?? '-', 48) }}</div>
                     <div><dt class="inline text-gray-400">at:</dt> {{ $anchor['anchored_at'] }}</div>
                 </dl>
             </div>
@@ -79,7 +79,7 @@
             <div class="rounded-md border px-4 py-3 text-sm
                 {{ $offlineValid ? 'border-green-200 bg-green-50 text-green-800' : 'border-red-200 bg-red-50 text-red-800' }}">
                 @if ($offlineValid)
-                    ✓ Offline verify passed — {{ $offlineChecked }} checkpoints. The forgery is internally consistent,
+                    ✓ Offline verify passed - {{ $offlineChecked }} checkpoints. The forgery is internally consistent,
                     so a purely local check is fooled.
                 @else
                     ✗ Offline verify failed.
@@ -93,7 +93,7 @@
                 @if (! $anchorsValid)
                     ✗ Anchor verify FAILED at checkpoint {{ $anchorsFailedCheckpointId }}
                     (<span class="font-mono text-xs">{{ $anchorsFailureType }}</span>).
-                    The TSA token binds the original digest — rewriting the chain changed it, and the attacker
+                    The TSA token binds the original digest - rewriting the chain changed it, and the attacker
                     can't forge the TSA's prior signature. <strong>The forgery is caught.</strong>
                 @else
                     ✓ Anchors valid.

@@ -64,5 +64,5 @@ it('throttles the anchor action', function () {
         ->call('createCheckpoint')
         ->call('anchor')
         ->assertSet('anchorReceipt', null)
-        ->assertSet('throttleMessage', 'Too many attempts — please wait a moment and try again.');
+        ->assertSet('throttleMessage', 'Too many attempts - please wait a moment and try again.');
 });

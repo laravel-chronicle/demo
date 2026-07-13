@@ -8,7 +8,7 @@ namespace App\Support;
  * the offline verification certificate actually exists on disk. Without all
  * three, the panel must show an explanatory placeholder rather than a fake pass
  * (a NullAnchor-style proof living in the same database the attacker controls
- * would falsely succeed — exactly what §4e forbids).
+ * would falsely succeed - exactly what §4e forbids).
  */
 class TsaAnchoring
 {

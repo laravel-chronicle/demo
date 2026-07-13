@@ -24,7 +24,7 @@ trait ThrottlesDestructiveActions
         $key = 'lab:'.$action.':'.(request()->ip() ?? 'unknown');
 
         if (RateLimiter::tooManyAttempts($key, $maxAttempts)) {
-            $this->throttleMessage = 'Too many attempts — please wait a moment and try again.';
+            $this->throttleMessage = 'Too many attempts - please wait a moment and try again.';
 
             return false;
         }

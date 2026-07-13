@@ -8,7 +8,7 @@
     <div class="grid gap-4 md:grid-cols-2">
         {{-- Before (valid) --}}
         <div class="rounded-md border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-800">
-            <p class="font-semibold">Before — chain intact</p>
+            <p class="font-semibold">Before - chain intact</p>
             <p class="mt-1">{{ $baselineChecked }} {{ Str::plural('entry', $baselineChecked) }} verified, hash chain valid.</p>
         </div>
 
@@ -16,7 +16,7 @@
         <div class="rounded-md border px-4 py-3 text-sm
             {{ $tampered ? 'border-red-200 bg-red-50 text-red-800' : 'border-gray-200 bg-gray-50 text-gray-500' }}">
             @if ($tampered && ! $valid)
-                <p class="font-semibold">After — Verification failed</p>
+                <p class="font-semibold">After - Verification failed</p>
                 <p class="mt-1">{{ $failureReason }}</p>
                 <p class="mt-1 font-mono text-xs">Failure type: {{ $failureType }}</p>
                 @if ($failedEntryId)

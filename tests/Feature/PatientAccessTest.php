@@ -3,6 +3,7 @@
 use App\Livewire\Patients\Show;
 use App\Models\Clinician;
 use App\Models\Patient;
+use Chronicle\Encryption\EntryDecryptor;
 use Chronicle\Facades\Chronicle;
 use Database\Seeders\ClinicianSeeder;
 use Livewire\Livewire;
@@ -16,9 +17,11 @@ it('records an access event when the patient detail is mounted', function () {
 
     $entry = Chronicle::query()->forSubject($patient)->action('patient.viewed')->first();
 
+    $context = app(EntryDecryptor::class)->field($entry, 'context');
+
     expect($entry)->not->toBeNull()
         ->and($entry->actor_type)->toBe(Clinician::class)
-        ->and($entry->context['reason'])->toBe('Opened patient detail');
+        ->and($context['reason'])->toBe('Opened patient detail');
 });
 
 it('shows the access event in the patient audit trail', function () {

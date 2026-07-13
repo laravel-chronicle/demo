@@ -8,7 +8,7 @@ use Livewire\Attributes\Title;
 use Livewire\Component;
 
 #[Layout('components.layouts.app')]
-#[Title('Integrity Lab — MedLedger')]
+#[Title('Integrity Lab - MedLedger')]
 class Index extends Component
 {
     public function render(): View

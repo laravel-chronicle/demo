@@ -10,8 +10,8 @@
         <dl class="mt-4 grid grid-cols-2 gap-4 rounded-lg border border-gray-200 bg-white p-4 text-sm">
             <div><dt class="text-gray-500">MRN</dt><dd class="font-medium">{{ $patient->mrn }}</dd></div>
             <div><dt class="text-gray-500">Date of birth</dt><dd class="font-medium">{{ $patient->dob->toFormattedDateString() }}</dd></div>
-            <div><dt class="text-gray-500">Allergies</dt><dd class="font-medium">{{ $patient->allergies ?: '—' }}</dd></div>
-            <div class="col-span-2"><dt class="text-gray-500">Notes</dt><dd class="font-medium">{{ $patient->notes ?: '—' }}</dd></div>
+            <div><dt class="text-gray-500">Allergies</dt><dd class="font-medium">{{ $patient->allergies ?: '-' }}</dd></div>
+            <div class="col-span-2"><dt class="text-gray-500">Notes</dt><dd class="font-medium">{{ $patient->notes ?: '-' }}</dd></div>
         </dl>
         <div class="mt-6 grid gap-4 md:grid-cols-3">
             {{-- Edit allergies (auto patient.updated) --}}
@@ -69,9 +69,9 @@
                             @foreach ($entry->diff as $field => $change)
                                 <li class="text-gray-700">
                                     <span class="font-medium">{{ $field }}:</span>
-                                    <span class="text-red-600 line-through">{{ $change['old'] ?? '—' }}</span>
+                                    <span class="text-red-600 line-through">{{ $change['old'] ?? '-' }}</span>
                                     &rarr;
-                                    <span class="text-green-700">{{ $change['new'] ?? '—' }}</span>
+                                    <span class="text-green-700">{{ $change['new'] ?? '-' }}</span>
                                 </li>
                             @endforeach
                         </ul>
