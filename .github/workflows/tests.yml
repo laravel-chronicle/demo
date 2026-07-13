@@ -49,6 +49,15 @@ jobs:
       - name: Generate Application Key
         run: php artisan key:generate
 
+      - name: Generate Chronicle Encryption Key
+        # Crypto-shredding is enabled (CHRONICLE_ENCRYPTION_ENABLED=true) but
+        # .env.example ships a blank CHRONICLE_ENCRYPTION_KEY on purpose - a
+        # dedicated base64 32-byte KEK must never be committed. Generate a fresh
+        # per-run key here so encryption can boot during the suite.
+        run: |
+          KEY=$(php -r 'echo base64_encode(random_bytes(32));')
+          sed -i "s|^CHRONICLE_ENCRYPTION_KEY=.*|CHRONICLE_ENCRYPTION_KEY=${KEY}|" .env
+
       - name: Build Assets
         run: npm run build
 
