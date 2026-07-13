@@ -15,7 +15,7 @@ breaking changes between any two versions - see upgrade notes per version.
 - Registered a dedicated Filament `audit` panel served at `/audit` (replacing the default scaffolded admin panel).
 - Made the audit panel publicly browsable by auto-authenticating a seeded read-only demo user (`auditor@medledger.test`) via panel middleware - no login wall.
 - Enabled the Chronicle plugin's read-only surfaces on the audit panel: verification, anchoring, signing keys, crypto-shredding, exports, and reporting. Left the verify gate at its default; the GDPR erase action is deferred to a later session.
-
+- Enabled real RFC 3161 external anchoring against freeTSA.org (`CHRONICLE_ANCHORING_ENABLED=true`, `CHRONICLE_TSA_URL=https://freetsa.org/tsr`), verified offline by the bundled CA chain at `storage/tsa/cacert.pem`. The checkpoint seeder anchors the latest checkpoint only when a TSA is reachable - no anchor is ever faked.
 
 ### Changed
 
