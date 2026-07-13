@@ -29,6 +29,7 @@ breaking changes between any two versions - see upgrade notes per version.
 ### Changed
 
 - Repointed the "For Auditors" navigation entry from a stub page to the new `/audit` Filament panel.
+- The audit panel now demonstrates the complete GDPR lifecycle: browse read-only as any persona, and switch to Admin Vega to erase a subject (irreversibly) or export the ledger. The demo remains self-resetting hourly, so erasures never accumulate.
 
 ---
 
