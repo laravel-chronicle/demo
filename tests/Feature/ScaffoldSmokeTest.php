@@ -45,6 +45,10 @@ it('renders the ledger explorer with seeded entries', function () {
 
 it('renders the integrity lab with all five panels', function () {
     $this->withoutVite();
+    // Anchoring is enabled in the app's .env; force the TSA off here so the
+    // full-compromise panel deterministically shows its "not configured"
+    // placeholder regardless of the machine's environment.
+    config(['chronicle.anchoring.providers.rfc3161.tsa_url' => null]);
     $this->seed(ClinicianSeeder::class);
     Patient::factory()->count(2)->create();
 

@@ -3,6 +3,7 @@
 use Chronicle\Anchoring\AnchorManager;
 use Chronicle\Anchoring\CheckpointAnchorer;
 use Chronicle\Contracts\SigningProvider;
+use Chronicle\Encryption\LocalKeyEncryptionProvider;
 use Chronicle\Signing\Ed25519SigningProvider;
 use Chronicle\Signing\KeyRing;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -82,4 +83,20 @@ function configureFakeTsa(): void
     // against the fake provider config set above.
     app()->forgetInstance(AnchorManager::class);
     app()->forgetInstance(CheckpointAnchorer::class);
+}
+
+/**
+ * Turn on the local-KEK crypto-shredding for a test with a fixed base64 KEK so
+ * entries recorded during the test encrypt deterministically. Mirrors the demo's
+ * production toggle (config/chronicle.php + CHRONICLE_ENCRYPTION_* env).
+ */
+function enableDemoEncryption(): void
+{
+    config([
+        'chronicle.encryption.enabled' => true,
+        'chronicle.encryption.fields' => ['metadata', 'context', 'diff'],
+        'chronicle.encryption.kek.provider' => LocalKeyEncryptionProvider::class,
+        'chronicle.encryption.kek.key' => base64_encode(str_repeat('k', 32)),
+        'chronicle.encryption.kek.id' => 'local',
+    ]);
 }

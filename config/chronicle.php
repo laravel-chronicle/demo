@@ -1,6 +1,7 @@
 <?php
 
 use Chronicle\Anchoring\Rfc3161TimestampAnchor;
+use Chronicle\Encryption\LocalKeyEncryptionProvider;
 use Chronicle\Signing\Ed25519SigningProvider;
 use Chronicle\Validation\ActionValidator;
 use Chronicle\Validation\ActorPresenceValidator;
@@ -171,6 +172,35 @@ return [
                 // Defaults to the CA chain shipped in the repo; override via env if needed.
                 'tsa_certificate' => env('CHRONICLE_TSA_CERTIFICATE') ?: storage_path('tsa/cacert.pem'),
             ],
+        ],
+    ],
+
+    'encryption' => [
+        /*
+        |----------------------------------------------------------------------
+        | Payload Encryption (Crypto-Shredding)
+        |----------------------------------------------------------------------
+        |
+        | Opt-in. When enabled, the configured payload fields are encrypted
+        | under a per-subject DEK before hashing, so destroying a subject's
+        | key (GDPR Art. 17 erasure) renders their content permanently
+        | unreadable while the ledger still verifies.
+        |
+        */
+        'enabled' => env('CHRONICLE_ENCRYPTION_ENABLED', false),
+
+        // PII-bearing payload fields encrypted per subject DEK.
+        'fields' => ['metadata', 'context', 'diff'],
+
+        /*
+        | Local demo KEK (decision 4): the KEK is derived from
+        | CHRONICLE_ENCRYPTION_KEY (a dedicated base64 32-byte key, NOT the app
+        | key). This keeps the demo self-contained - no AWS KMS.
+        */
+        'kek' => [
+            'provider' => LocalKeyEncryptionProvider::class,
+            'key' => env('CHRONICLE_ENCRYPTION_KEY'),
+            'id' => env('CHRONICLE_ENCRYPTION_KEK_ID', 'local'),
         ],
     ],
 

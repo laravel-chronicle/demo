@@ -6,6 +6,7 @@ use App\Models\Clinician;
 use App\Models\Patient;
 use App\Support\CurrentClinician;
 use Chronicle\Contracts\ReferenceResolver;
+use Chronicle\Encryption\EntryDecryptor;
 use Chronicle\Entry\Entry;
 use Chronicle\Facades\Chronicle;
 use Chronicle\Support\Reference;
@@ -143,6 +144,7 @@ class Show extends Component
         $this->patient->loadMissing('prescriptions', 'encounters');
 
         $resolver = app(ReferenceResolver::class);
+        $decryptor = app(EntryDecryptor::class);
 
         $references = collect([$this->patient])
             ->concat($this->patient->prescriptions)
@@ -159,6 +161,11 @@ class Show extends Component
                 }
             })
             ->latestFirst()
-            ->get();
+            ->get()
+            // With crypto-shredding on, payload fields read back as cipher
+            // envelopes; decrypt the displayed diff for the entry's subject so
+            // the trail shows real field changes (a no-op when encryption is off
+            // or the subject has been erased).
+            ->each(fn (Entry $entry) => $entry->setAttribute('diff', $decryptor->field($entry, 'diff')));
     }
 }
