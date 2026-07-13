@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
             PatientSeeder::class,
             SubjectLifecycleSeeder::class,
             LedgerCheckpointSeeder::class,
+            AuditArtifactSeeder::class,
         ]);
     }
 }
