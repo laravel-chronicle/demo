@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
             DemoUserSeeder::class,
             ClinicianSeeder::class,
             PatientSeeder::class,
+            SubjectLifecycleSeeder::class,
             LedgerCheckpointSeeder::class,
         ]);
     }

@@ -19,6 +19,7 @@ breaking changes between any two versions - see upgrade notes per version.
 - Published and migrated the core 1.13 lifecycle tables (`chronicle_subject_keys`, `chronicle_legal_holds`) that back the crypto-shredding and legal-hold surfaces.
 - Enabled per-subject payload encryption (crypto-shredding) with a local demo KEK (`CHRONICLE_ENCRYPTION_ENABLED=true`, `LocalKeyEncryptionProvider`); patient PII in `metadata`/`context`/`diff` is now encrypted under a per-subject DEK. Added an explicit `encryption` block to `config/chronicle.php`.
 - The checkpoint seeder now demonstrates signing-key rotation: it seals the initial checkpoints under key A (`chronicle-dev-key`), runs `chronicle:key:rotate` to key B (`chronicle-key-2`), and seals + anchors the latest checkpoint under key B. The active key is now `chronicle-key-2`, so the key-ring widget shows key A **Retired** and key B **Active**.
+- Added `SubjectLifecycleSeeder`: crypto-shreds one demo patient (Neptune Vesper -> Erased + a `subject.erased` proof) and places a legal hold on another (Saturn Vesper -> On hold), leaving the rest Encrypted - populating all three states on the crypto-shredding surface. The chain still verifies after erasure.
 
 ### Changed
 
