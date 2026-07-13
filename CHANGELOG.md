@@ -23,6 +23,7 @@ breaking changes between any two versions - see upgrade notes per version.
 - Added `AuditArtifactSeeder`: pre-generates one verifiable export bundle and one signed compliance report onto the exports disk (via the plugin's `ExportArtifactStore` / `ComplianceReportStore`), so the export-artifacts widget and reporting surface show real artifacts on first load.
 - Enabled the Chronicle plugin's GDPR erase action on the audit panel, gated deny-by-default, so it is reachable **only** under the admin persona (Admin Vega); every other persona keeps the panel read-only. Legal holds always block erasure - `eraseAllowHoldOverride` stays `false`.
 - Gated the panel's ledger export actions on the admin persona as well (an export egresses the whole dataset).
+- Added end-to-end coverage proving the erase action is honest: as admin it destroys a live patient's subject key and appends a single `subject.erased` proof while the chain still verifies; a patient under a legal hold is blocked; and the action is hidden for non-admin personas.
 
 ### Changed
 
