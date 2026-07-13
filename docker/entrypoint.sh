@@ -9,7 +9,7 @@ DB_FILE="${DB_DATABASE:-/data/database.sqlite}"
 mkdir -p "$(dirname "$DB_FILE")"
 touch "$DB_FILE"
 
-# Cache framework config for production (APP_KEY etc. arrive as Fly secrets).
+# Cache framework config for production (APP_KEY etc. arrive via env_file).
 php artisan config:cache
 php artisan route:cache
 php artisan view:cache
