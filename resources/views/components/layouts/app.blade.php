@@ -8,6 +8,7 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>{{ $title ?? 'MedLedger - Chronicle Demo' }}</title>
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        <x-matomo />
     </head>
     <body class="min-h-full bg-gray-50 text-gray-900 antialiased">
         {{-- Persistent honesty banner + manual reset --}}

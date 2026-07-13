@@ -33,6 +33,10 @@ class AuditPanelProvider extends PanelProvider
                 PanelsRenderHook::PAGE_START,
                 fn (): string => view('filament.audit-persona-banner')->render(),
             )
+            ->renderHook(
+                PanelsRenderHook::HEAD_END,
+                fn (): string => view('components.matomo')->render(),
+            )
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')
             ->pages([
