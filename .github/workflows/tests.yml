@@ -58,6 +58,26 @@ jobs:
           KEY=$(php -r 'echo base64_encode(random_bytes(32));')
           sed -i "s|^CHRONICLE_ENCRYPTION_KEY=.*|CHRONICLE_ENCRYPTION_KEY=${KEY}|" .env
 
+      - name: Generate Chronicle Signing Keys
+        # The active key is chronicle-key-2 and both keypairs' material is blank
+        # in .env.example on purpose (signing private keys are never committed).
+        # Mint two fresh Ed25519 keypairs with the package's own generator so
+        # the key ring resolves during the suite. Key IDs are fixed in
+        # config/chronicle.php; these env vars only supply the material.
+        run: |
+          set -euo pipefail
+          mint() {
+            local out priv pub
+            out=$(php artisan chronicle:key:generate)
+            priv=$(printf '%s\n' "$out" | sed -n 's/^Private key (base64): //p')
+            pub=$(printf '%s\n' "$out" | sed -n 's/^Public key (base64): //p')
+            [ -n "$priv" ] && [ -n "$pub" ] || { echo "Failed to parse generated keypair"; exit 1; }
+            sed -i "s|^$1=.*|$1=${priv}|" .env
+            sed -i "s|^$2=.*|$2=${pub}|" .env
+          }
+          mint CHRONICLE_PRIVATE_KEY CHRONICLE_PUBLIC_KEY
+          mint CHRONICLE_KEY2_PRIVATE_KEY CHRONICLE_KEY2_PUBLIC_KEY
+
       - name: Build Assets
         run: npm run build
 
