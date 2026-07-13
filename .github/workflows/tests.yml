@@ -5,10 +5,12 @@ on:
     branches:
       - develop
       - main
+      - filament
   pull_request:
     branches:
       - develop
       - main
+      - filament
 
 permissions:
   contents: read
