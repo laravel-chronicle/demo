@@ -54,6 +54,10 @@ class AuditPanelProvider extends PanelProvider
                     ->cryptoShredding(true)
                     ->exports(true)
                     ->reporting(true)
+                    ->erasure(true)
+                    ->eraseAllowHoldOverride(false)
+                    ->eraseAuthorize(fn (): bool => session('demo_persona') === 'admin')
+                    ->exportAuthorize(fn (): bool => session('demo_persona') === 'admin')
             );
     }
 }

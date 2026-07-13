@@ -21,6 +21,8 @@ breaking changes between any two versions - see upgrade notes per version.
 - The checkpoint seeder now demonstrates signing-key rotation: it seals the initial checkpoints under key A (`chronicle-dev-key`), runs `chronicle:key:rotate` to key B (`chronicle-key-2`), and seals + anchors the latest checkpoint under key B. The active key is now `chronicle-key-2`, so the key-ring widget shows key A **Retired** and key B **Active**.
 - Added `SubjectLifecycleSeeder`: crypto-shreds one demo patient (Neptune Vesper -> Erased + a `subject.erased` proof) and places a legal hold on another (Saturn Vesper -> On hold), leaving the rest Encrypted - populating all three states on the crypto-shredding surface. The chain still verifies after erasure.
 - Added `AuditArtifactSeeder`: pre-generates one verifiable export bundle and one signed compliance report onto the exports disk (via the plugin's `ExportArtifactStore` / `ComplianceReportStore`), so the export-artifacts widget and reporting surface show real artifacts on first load.
+- Enabled the Chronicle plugin's GDPR erase action on the audit panel, gated deny-by-default, so it is reachable **only** under the admin persona (Admin Vega); every other persona keeps the panel read-only. Legal holds always block erasure - `eraseAllowHoldOverride` stays `false`.
+- Gated the panel's ledger export actions on the admin persona as well (an export egresses the whole dataset).
 
 ### Changed
 
