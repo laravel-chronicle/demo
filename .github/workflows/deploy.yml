@@ -6,6 +6,7 @@ on:
       - main
     tags:
       - 'v*'
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -50,3 +51,22 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+
+  ssh-and-pull:
+    needs: [build-and-push]
+    name: SSH and Pull new Image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Execute remote SSH
+        uses: appleboy/ssh-action@0ff4204d59e8e51228ff73bce53f80d53301dee2 # v1.2.5
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          passphrase: ${{ secrets.PASSPHRASE }}
+          port: ${{ secrets.PORT }}
+          fingerprint: ${{ secrets.FINGERPRINT }}
+          script: |
+            cd /home/sites/demo
+            docker compose pull
+            docker compose up -d

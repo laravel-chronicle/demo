@@ -61,6 +61,11 @@ CHRONICLE_KEY2_PUBLIC_KEY=...
 
 # CHRONICLE_TSA_URL=https://freetsa.org/tsr
 # CHRONICLE_TSA_CERTIFICATE=storage/tsa/cacert.pem
+
+# Matomo analytics (self-hosted on the same VPS). Cookieless + honours Do Not
+# Track — no consent banner needed. Leave blank to disable tracking entirely.
+MATOMO_URL=https://analytics.laravel-chronicle.dev
+MATOMO_SITE_ID=1
 ```
 
 `DB_DATABASE` points at `/data`, which is the persistent volume - the ledger survives redeploys. The entrypoint creates, migrates, and seeds it on first boot.
