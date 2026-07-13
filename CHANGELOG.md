@@ -24,6 +24,7 @@ breaking changes between any two versions - see upgrade notes per version.
 - Enabled the Chronicle plugin's GDPR erase action on the audit panel, gated deny-by-default, so it is reachable **only** under the admin persona (Admin Vega); every other persona keeps the panel read-only. Legal holds always block erasure - `eraseAllowHoldOverride` stays `false`.
 - Gated the panel's ledger export actions on the admin persona as well (an export egresses the whole dataset).
 - Added end-to-end coverage proving the erase action is honest: as admin it destroys a live patient's subject key and appends a single `subject.erased` proof while the chain still verifies; a patient under a legal hold is blocked; and the action is hidden for non-admin personas.
+- Added a persona-aware banner to the audit panel: it repeats the "fictional data, resets hourly" honesty note and tells visitors to switch to the Admin Vega persona to unlock the GDPR erase and export actions (confirming when they are already unlocked).
 
 ### Changed
 

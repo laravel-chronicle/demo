@@ -11,6 +11,7 @@ use Filament\Pages\Dashboard;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
+use Filament\View\PanelsRenderHook;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
@@ -28,6 +29,10 @@ class AuditPanelProvider extends PanelProvider
             ->colors([
                 'primary' => Color::Blue,
             ])
+            ->renderHook(
+                PanelsRenderHook::PAGE_START,
+                fn (): string => view('filament.audit-persona-banner')->render(),
+            )
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')
             ->pages([
@@ -48,13 +53,13 @@ class AuditPanelProvider extends PanelProvider
             ])
             ->plugin(
                 ChronicleFilamentPlugin::make()
-                    ->verification(true)
-                    ->anchoring(true)
-                    ->signingKeys(true)
-                    ->cryptoShredding(true)
-                    ->exports(true)
-                    ->reporting(true)
-                    ->erasure(true)
+                    ->verification()
+                    ->anchoring()
+                    ->signingKeys()
+                    ->cryptoShredding()
+                    ->exports()
+                    ->reporting()
+                    ->erasure()
                     ->eraseAllowHoldOverride(false)
                     ->eraseAuthorize(fn (): bool => session('demo_persona') === 'admin')
                     ->exportAuthorize(fn (): bool => session('demo_persona') === 'admin')
