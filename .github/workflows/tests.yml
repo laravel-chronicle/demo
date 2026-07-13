@@ -61,17 +61,16 @@ jobs:
       - name: Generate Chronicle Signing Keys
         # The active key is chronicle-key-2 and both keypairs' material is blank
         # in .env.example on purpose (signing private keys are never committed).
-        # Mint two fresh Ed25519 keypairs with the package's own generator so
-        # the key ring resolves during the suite. Key IDs are fixed in
-        # config/chronicle.php; these env vars only supply the material.
+        # Mint two fresh Ed25519 keypairs directly with libsodium - the same
+        # primitive Ed25519SigningProvider expects (base64 64-byte secret key +
+        # 32-byte public key). Key IDs are fixed in config/chronicle.php; these
+        # env vars only supply the material.
         run: |
           set -euo pipefail
           mint() {
-            local out priv pub
-            out=$(php artisan chronicle:key:generate)
-            priv=$(printf '%s\n' "$out" | sed -n 's/^Private key (base64): //p')
-            pub=$(printf '%s\n' "$out" | sed -n 's/^Public key (base64): //p')
-            [ -n "$priv" ] && [ -n "$pub" ] || { echo "Failed to parse generated keypair"; exit 1; }
+            local priv pub
+            read -r priv pub < <(php -r '$k = sodium_crypto_sign_keypair(); echo base64_encode(sodium_crypto_sign_secretkey($k)), " ", base64_encode(sodium_crypto_sign_publickey($k)), PHP_EOL;')
+            [ -n "$priv" ] && [ -n "$pub" ] || { echo "Failed to generate keypair"; exit 1; }
             sed -i "s|^$1=.*|$1=${priv}|" .env
             sed -i "s|^$2=.*|$2=${pub}|" .env
           }
