@@ -42,7 +42,7 @@ class LedgerVerifier
     {
         return match ($type) {
             VerificationFailure::PayloadHashMismatch->value => "An entry's stored payload no longer matches its recorded payload hash.",
-            VerificationFailure::ChainHashMismatch->value => "The hash chain is broken — an entry's link to its predecessor does not recompute.",
+            VerificationFailure::ChainHashMismatch->value => "The hash chain is broken - an entry's link to its predecessor does not recompute.",
             VerificationFailure::ColumnPayloadDivergence->value => "An entry's columns were altered out of sync with its signed payload.",
             VerificationFailure::CheckpointMissing->value => 'A checkpoint referenced by an entry is missing.',
             VerificationFailure::CheckpointSignatureInvalid->value => 'A checkpoint signature failed verification.',

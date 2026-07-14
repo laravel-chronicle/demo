@@ -23,7 +23,7 @@ it('lists ledger entries with action, actor and chain position', function () {
 });
 
 // Note on the actor assertion: a no-session `Patient::factory()->create()` resolves
-// `CurrentClinician` to the default persona (`physician` → "Dr. Reyes"), and the
+// `CurrentClinician` to the default persona (`physician` -> "Dr. Reyes"), and the
 // table renders the clinician's *name* (not the word "Clinician") for Clinician actors.
 
 it('reports a valid ledger when Verify is pressed', function () {

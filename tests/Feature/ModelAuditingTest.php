@@ -2,6 +2,7 @@
 
 use App\Models\Clinician;
 use App\Models\Patient;
+use Chronicle\Encryption\EntryDecryptor;
 use Chronicle\Facades\Chronicle;
 use Database\Seeders\ClinicianSeeder;
 use Database\Seeders\PatientSeeder;
@@ -28,9 +29,13 @@ it('records patient.updated with a diff of the changed fields', function () {
 
     $entry = Chronicle::query()->forSubject($patient)->action('patient.updated')->latest()->first();
 
-    expect($entry->diff)->toHaveKey('allergies')
-        ->and($entry->diff['allergies']['old'])->toBe('None')
-        ->and($entry->diff['allergies']['new'])->toBe('Penicillin');
+    // Payload fields read back as cipher envelopes when crypto-shredding is on;
+    // decrypt for the assertion (a no-op when encryption is off).
+    $diff = app(EntryDecryptor::class)->field($entry, 'diff');
+
+    expect($diff)->toHaveKey('allergies')
+        ->and($diff['allergies']['old'])->toBe('None')
+        ->and($diff['allergies']['new'])->toBe('Penicillin');
 });
 
 it('records prescription.created when a prescription is added to a patient', function () {

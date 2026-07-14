@@ -38,12 +38,12 @@
     @if ($rotated)
         <div class="grid gap-3 text-sm md:grid-cols-2">
             <div class="rounded border border-gray-200 bg-gray-50 px-4 py-3">
-                <p class="font-semibold text-gray-700">Epoch 1 — retired key</p>
+                <p class="font-semibold text-gray-700">Epoch 1 - retired key</p>
                 <p class="mt-1 font-mono text-xs text-gray-600">key: {{ $epoch1Checkpoint['key_id'] }}</p>
                 <p class="font-mono text-xs text-gray-600">checkpoint: {{ $epoch1Checkpoint['id'] }}</p>
             </div>
             <div class="rounded border border-gray-200 bg-gray-50 px-4 py-3">
-                <p class="font-semibold text-gray-700">Epoch 2 — new active key</p>
+                <p class="font-semibold text-gray-700">Epoch 2 - new active key</p>
                 <p class="mt-1 font-mono text-xs text-gray-600">key: {{ $epoch2Checkpoint['key_id'] }}</p>
                 <p class="font-mono text-xs text-gray-600">checkpoint: {{ $epoch2Checkpoint['id'] }}</p>
             </div>
@@ -54,7 +54,7 @@
         <div class="rounded-md border px-4 py-3 text-sm
             {{ $valid ? 'border-green-200 bg-green-50 text-green-800' : 'border-red-200 bg-red-50 text-red-800' }}">
             @if ($valid)
-                ✓ Ledger verified — {{ $checked }} entries. Pre-rotation checkpoints still verify under the
+                ✓ Ledger verified - {{ $checked }} entries. Pre-rotation checkpoints still verify under the
                 retired key while new checkpoints use {{ \App\Livewire\Lab\KeyRotation::NEW_KEY_ID }}.
             @else
                 ✗ Ledger verification failed after rotation.

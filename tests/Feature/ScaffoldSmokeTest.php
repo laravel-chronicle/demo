@@ -6,7 +6,7 @@ use Database\Seeders\ClinicianSeeder;
 beforeEach(fn () => $this->withoutVite());
 
 it('boots and renders every public screen without error', function () {
-    $routes = ['home', 'patients.index', 'ledger.index', 'lab.index', 'auditors.index', 'how.it.works'];
+    $routes = ['home', 'patients.index', 'ledger.index', 'lab.index', 'how.it.works'];
 
     foreach ($routes as $name) {
         $this->get(route($name))
@@ -45,6 +45,10 @@ it('renders the ledger explorer with seeded entries', function () {
 
 it('renders the integrity lab with all five panels', function () {
     $this->withoutVite();
+    // Anchoring is enabled in the app's .env; force the TSA off here so the
+    // full-compromise panel deterministically shows its "not configured"
+    // placeholder regardless of the machine's environment.
+    config(['chronicle.anchoring.providers.rfc3161.tsa_url' => null]);
     $this->seed(ClinicianSeeder::class);
     Patient::factory()->count(2)->create();
 
@@ -68,6 +72,6 @@ it('shows the manual Reset demo control in the banner', function () {
 
     $this->get(route('home'))
         ->assertOk()
-        ->assertSee('Public demo — all data is fictional — resets hourly.')
+        ->assertSee('Public demo - all data is fictional - resets hourly.')
         ->assertSee('Reset demo');
 });

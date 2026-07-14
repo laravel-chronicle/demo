@@ -7,7 +7,9 @@ use Illuminate\Support\Facades\Cache;
 use Livewire\Livewire;
 
 beforeEach(function () {
-    pinSigningKey();
+    // The checkpoint seeder now rotates key A -> key B, so both keys must be in
+    // the ring for signing to succeed.
+    pinTwoSigningKeys();
     // The throttle lives in the file store (it must survive demo:reset's
     // migrate:fresh, which wipes the database cache table). Clear it so each
     // test starts from a known state.
@@ -15,6 +17,9 @@ beforeEach(function () {
 });
 
 it('rebuilds a verifiable ledger and redirects home when pressed', function () {
+    // Anchoring is enabled app-wide; keep the rebuild offline and deterministic.
+    config(['chronicle.anchoring.providers' => []]);
+
     Livewire::test(ResetDemo::class)
         ->call('resetDemo')
         ->assertRedirect(route('home'));
@@ -32,5 +37,5 @@ it('throttles repeated resets per IP', function () {
     Livewire::test(ResetDemo::class)
         ->call('resetDemo')
         ->assertNoRedirect()
-        ->assertSet('message', 'The demo was reset recently — please wait before resetting again.');
+        ->assertSet('message', 'The demo was reset recently - please wait before resetting again.');
 });

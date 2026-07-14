@@ -1,9 +1,9 @@
-<x-layouts.app title="MedLedger — Chronicle Demo">
+<x-layouts.app title="MedLedger - Chronicle Demo">
     <section class="max-w-3xl">
         <h1 class="text-3xl font-bold tracking-tight">MedLedger</h1>
         <p class="mt-4 text-lg leading-relaxed text-gray-700">
             MedLedger is a fictional clinic that shows off
-            <a href="{{ config('demo.links.docs') }}" class="font-medium text-indigo-600 hover:underline">Laravel Chronicle</a> —
+            <a href="{{ config('demo.links.docs') }}" class="font-medium text-indigo-600 hover:underline">Laravel Chronicle</a> -
             a tamper-evident audit ledger for Laravel. Watch audit trails appear automatically as records
             are viewed and changed, then see the ledger detect tampering, survive a key rotation, and fail a
             forged trail under external anchoring. Chronicle guarantees the integrity of the audit ledger

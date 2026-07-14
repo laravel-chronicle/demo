@@ -144,7 +144,7 @@ class FullCompromise extends Component
 
                 $isTarget = false;
             } else {
-                // Payload untouched → payload_hash stands; only the chain link moves.
+                // Payload untouched -> payload_hash stands; only the chain link moves.
                 $chainHash = $hasher->hash($previousChain, (string) $entry->payload_hash);
                 DB::table('chronicle_entries')->where('id', $entry->id)->update(['chain_hash' => $chainHash]);
             }
@@ -254,7 +254,9 @@ class FullCompromise extends Component
     /**
      * Snapshot every entry and checkpoint so reset can restore the ledger
      * precisely. Stored byte order is irrelevant: verification canonicalizes the
-     * decoded payload and we also restore payload_hash/chain_hash verbatim.
+     * decoded payload, and we also restore payload_hash/chain_hash verbatim.
+     *
+     * @throws JsonException
      */
     private function snapshot(): void
     {

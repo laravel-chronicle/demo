@@ -46,15 +46,25 @@ it('keeps secrets and local artifacts out of the Docker build context', function
         ->toContain('database/database.sqlite');
 });
 
-it('configures Fly to persist SQLite on a volume and health-check the app', function () {
-    $fly = File::get(base_path('fly.toml'));
+it('builds and pushes the demo image to GHCR in CI', function () {
+    $workflow = File::get(base_path('.github/workflows/deploy.yml'));
 
-    expect($fly)
-        ->toContain("destination = '/data'")
-        ->toContain("DB_DATABASE = '/data/database.sqlite'")
-        ->toContain('internal_port = 8080')
-        ->toContain("path = '/up'")
-        ->toContain('min_machines_running = 1');
+    expect($workflow)
+        ->toContain('ghcr.io/laravel-chronicle/demo')
+        ->toContain('build-push-action')
+        ->toContain('packages: write');
+});
+
+it('runs the container behind Traefik with a persistent SQLite volume', function () {
+    $compose = File::get(base_path('docker-compose.yml'));
+
+    expect($compose)
+        ->toContain('image: ghcr.io/laravel-chronicle/demo')
+        ->toContain('medledger_data:/data')
+        ->toContain('http://localhost:8080/up')
+        ->toContain('.env.production')
+        ->toContain('restart: unless-stopped')
+        ->toContain('external: true');
 });
 
 it('documents the required production secrets and steps in DEPLOY.md', function () {
@@ -64,9 +74,17 @@ it('documents the required production secrets and steps in DEPLOY.md', function 
         ->toContain('APP_KEY')
         ->toContain('chronicle:key:generate')
         ->toContain('CHRONICLE_TSA_URL')
-        ->toContain('fly volumes create')
-        ->toContain('fly deploy')
-        ->toContain('Forge');
+        ->toContain('docker compose pull')
+        ->toContain('docker compose up -d')
+        ->toContain('ghcr.io')
+        ->toContain('Traefik');
+});
+
+it('no longer references Fly.io in the deployment artifacts', function () {
+    expect(File::exists(base_path('fly.toml')))->toBeFalse()
+        ->and(File::get(base_path('DEPLOY.md')))
+        ->not->toContain('fly deploy')
+        ->not->toContain('fly volumes create');
 });
 
 it('explains the local run and links the docs in the README', function () {

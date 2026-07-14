@@ -3,7 +3,7 @@
         <div>
             <h1 class="text-2xl font-semibold">Ledger Explorer</h1>
             <p class="mt-1 text-sm text-gray-600">
-                The raw Chronicle ledger — every audited entry, hash-chained in order.
+                The raw Chronicle ledger - every audited entry, hash-chained in order.
             </p>
             <a href="{{ route('chronicle.entries.index') }}"
                class="mt-2 inline-block text-sm text-indigo-600 hover:underline">
@@ -21,7 +21,7 @@
         @if ($valid)
             <div class="mt-4 flex items-center gap-2 rounded-md border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-800">
                 <span class="text-lg">✓</span>
-                <span>Ledger verified — {{ $checked }} {{ Str::plural('entry', $checked) }} checked, hash chain intact.</span>
+                <span>Ledger verified - {{ $checked }} {{ Str::plural('entry', $checked) }} checked, hash chain intact.</span>
             </div>
         @else
             <div class="mt-4 rounded-md border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800">

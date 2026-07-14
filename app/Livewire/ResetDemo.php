@@ -35,7 +35,7 @@ class ResetDemo extends Component
         $attempts = is_int($attempts) ? $attempts : 0;
 
         if ($attempts >= self::MAX_RESETS) {
-            $this->message = 'The demo was reset recently — please wait before resetting again.';
+            $this->message = 'The demo was reset recently - please wait before resetting again.';
 
             return;
         }

@@ -57,10 +57,10 @@ it('passes offline checkpoints-only verify but fails --anchors after a full comp
 
     $component->call('compromise')->assertSet('step', 2);
 
-    // Offline (--checkpoints-only): the forgery is internally consistent → PASSES.
+    // Offline (--checkpoints-only): the forgery is internally consistent -> PASSES.
     $component->call('verifyOffline')->assertSet('offlineValid', true);
 
-    // --anchors: the TSA token bound the ORIGINAL digest → FAILS at the anchored checkpoint.
+    // --anchors: the TSA token bound the ORIGINAL digest -> FAILS at the anchored checkpoint.
     $component->call('verifyAnchors')
         ->assertSet('anchorsValid', false)
         ->assertSet('anchorsFailureType', VerificationFailure::AnchorInvalid->value);

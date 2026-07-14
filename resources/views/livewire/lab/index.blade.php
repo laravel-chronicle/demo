@@ -8,7 +8,7 @@
         </p>
         <p class="mt-2 max-w-3xl text-sm text-gray-500">
             Everything here is synthetic and reversible. Tamper attacks use raw database writes
-            that bypass Chronicle — exactly how a real attacker with database access would work.
+            that bypass Chronicle - exactly how a real attacker with database access would work.
         </p>
     </header>
 
@@ -24,7 +24,7 @@
     <section id="panel-4b" class="rounded-xl border border-gray-200 bg-white p-6">
         <h2 class="text-lg font-semibold text-gray-900">4b · Full lifecycle</h2>
         <p class="mt-1 text-sm text-gray-600">
-            Step through generate activity → checkpoint → anchor → export → verify-export, with the
+            Step through generate activity -> checkpoint -> anchor -> export -> verify-export, with the
             signed artifact rendered at every step.
         </p>
         <livewire:lab.lifecycle-stepper />
