@@ -33,3 +33,4 @@ jobs:
     uses: laravel-chronicle/.github/.github/workflows/pull.yml@1a45a843268ac40b2ab35efc8941c5533514031f # main
     with:
       directory: '/home/sites/demo'
+    secrets: inherit
