@@ -14,7 +14,7 @@ permissions:
 
 jobs:
   build-and-push:
-    uses: laravel-chronicle/.github/.github/workflows/build.yml
+    uses: laravel-chronicle/.github/.github/workflows/build.yml@51438c15798d323d564ae6dad40dbcc2ccb0ca39 # main
     with:
       image: 'ghcr.io/laravel-chronicle/demo'
       dockerfile: './Dockerfile'
@@ -22,7 +22,7 @@ jobs:
 
   cleanup:
     needs: [build-and-push]
-    uses: laravel-chronicle/.github/.github/workflows/cleanup.yml
+    uses: laravel-chronicle/.github/.github/workflows/cleanup.yml@b6b15e48589b8d2ac37a1a9c08ec2290c090a93d # main
     with:
       package_name: 'demo'
       package_type: 'container'
@@ -30,6 +30,6 @@ jobs:
 
   ssh-and-pull:
     needs: [build-and-push]
-    uses: laravel-chronicle/.github/.github/workflows/pull.yml
+    uses: laravel-chronicle/.github/.github/workflows/pull.yml@1a45a843268ac40b2ab35efc8941c5533514031f # main
     with:
       directory: '/home/sites/demo'
