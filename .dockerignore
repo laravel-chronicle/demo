@@ -19,3 +19,17 @@ database/database.sqlite
 tests
 .phpunit.cache
 .phpunit.result.cache
+
+# Dev tooling & configs not needed at runtime
+.claude
+.mcp.json
+boost.json
+.editorconfig
+.gitattributes
+phpstan.neon
+pint.json
+
+# Docker build files (redundant inside the image)
+Dockerfile
+docker-compose.yml
+.dockerignore

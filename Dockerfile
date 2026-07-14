@@ -8,16 +8,15 @@ COPY resources resources
 RUN npm run build
 
 # --- Stage 2: PHP runtime (FrankenPHP serves classical Laravel; no Octane) ---
-# Pin a minor when you cut a release, e.g. dunglas/frankenphp:1.x-php8.4-bookworm
-FROM dunglas/frankenphp:php8.4 AS runtime
+# Pin a minor when you cut a release, e.g. dunglas/frankenphp:1.x-php8.4-alpine
+FROM dunglas/frankenphp:1.12-php8.5-alpine AS runtime
 
 # PHP extensions Laravel + SQLite + Chronicle need (sodium/openssl ship enabled)
 RUN install-php-extensions pdo_sqlite intl zip opcache pcntl
 
-# supervisor runs the web server and the scheduler together in one container
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends supervisor \
-    && rm -rf /var/lib/apt/lists/*
+# supervisor runs the web server and the scheduler together in one container;
+# curl is used by the container healthcheck
+RUN apk add --no-cache supervisor curl
 
 WORKDIR /app
 
