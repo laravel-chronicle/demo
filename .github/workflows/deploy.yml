@@ -26,11 +26,11 @@ jobs:
     with:
       package_name: 'demo'
       package_type: 'container'
-      min_versions_to_keep: 4
+      min_versions_to_keep: 3
 
   ssh-and-pull:
     needs: [build-and-push]
-    uses: laravel-chronicle/.github/.github/workflows/pull.yml@1a45a843268ac40b2ab35efc8941c5533514031f # main
+    uses: laravel-chronicle/.github/.github/workflows/pull.yml@ac605f60a368abf37caa7a29890eb48a24fdf170 # main
     with:
       directory: '/home/sites/demo'
     secrets: inherit
