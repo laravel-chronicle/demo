@@ -51,7 +51,7 @@ it('builds and pushes the demo image to GHCR in CI', function () {
 
     expect($workflow)
         ->toContain('ghcr.io/laravel-chronicle/demo')
-        ->toContain('build-push-action')
+        ->toContain('build-and-push')
         ->toContain('packages: write');
 });
 
