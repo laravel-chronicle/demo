@@ -1,6 +1,6 @@
 # MedLedger - a Laravel Chronicle demo
 
-MedLedger is a fictional clinic that shows what [Laravel Chronicle](https://laravel-chronicle.github.io/docs/overview) does: a **tamper-evident audit ledger**. Every clinical action is recorded in a hash-linked, signed ledger, and the Integrity Lab lets you *try to break it* - then watch verification localize the damage.
+MedLedger is a fictional clinic that shows what [Laravel Chronicle](https://laravel-chronicle.dev/docs/overview) does: a **tamper-evident audit ledger**. Every clinical action is recorded in a hash-linked, signed ledger, and the Integrity Lab lets you *try to break it* - then watch verification localize the damage.
 
 > **All data is synthetic** (planet-named patients, fake MRNs) and the demo **resets hourly**. It's a public sandbox: go ahead and click "tamper".
 
