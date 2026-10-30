@@ -28,10 +28,4 @@ jobs:
       package_type: 'container'
       min_versions_to_keep: 3
 
-  ssh-and-pull:
-    needs: [build-and-push]
-    uses: laravel-chronicle/.github/.github/workflows/pull.yml@e0e5ca059edf7b288bc64bccdf98f0090b24eb15 # main
-    with:
-      directory: '/home/sites/demo'
-      compose_file: 'https://raw.githubusercontent.com/laravel-chronicle/demo/refs/heads/main/docker-compose.yml'
-    secrets: inherit
+  # No SSH deploy: the server pulls new images itself on a timer (DEPLOY.md, step 5).
