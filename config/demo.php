@@ -16,7 +16,7 @@ return [
 
     'links' => [
         'repo' => 'https://github.com/laravel-chronicle/core',
-        'docs' => 'https://laravel-chronicle.github.io/docs/overview',
+        'docs' => 'https://laravel-chronicle.dev/docs/overview',
     ],
 
     /**
