@@ -5,7 +5,10 @@ on:
     types: [opened, reopened]
   pull_request_target:
     types: [opened, reopened]
- 
+
+# The job authenticates with PROJECT_BOARD_TOKEN, so GITHUB_TOKEN needs no permissions.
+permissions: {}
+
 jobs:
   add-to-project:
     runs-on: ubuntu-latest
