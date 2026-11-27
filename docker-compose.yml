@@ -2,7 +2,7 @@
 # Traefik terminates TLS; this container serves plain HTTP on :8080 and
 # publishes no ports of its own (Docker's published ports bypass ufw).
 #
-# Assumes the Traefik setup from quietsysadmin/stacks base/: an external
+# Assumes the Traefik setup in deploy/traefik/: an external
 # "proxy" network, a "websecure" entrypoint and a "le" cert resolver.
 
 services:
