@@ -6,8 +6,8 @@ CI (`.github/workflows/deploy.yml`) builds the image and pushes it to GHCR (`ghc
 
 ## Prerequisites
 
-- A Docker host set up like [quietsysadmin/stacks `base/`](https://github.com/quietsysadmin/stacks/tree/main/base): SSH keys only, ufw, unattended upgrades, Docker Engine with the Compose plugin.
-- **Traefik** as the only container that publishes ports (80/443), with:
+- A hardened Docker host: SSH keys only (no root login, no passwords), ufw denying incoming except 22, 80 and 443, unattended security upgrades, Docker Engine from Docker's own repository with the Compose plugin.
+- **Traefik** as the only container that publishes ports (80/443). [`deploy/traefik/`](deploy/traefik/) is the setup the live demo runs (in `/srv/traefik`), with:
     - an external Docker network named `proxy`,
     - a `websecure` entrypoint,
     - a Let's Encrypt cert resolver named `le`.

@@ -1,0 +1,41 @@
+# Traefik: the only container that publishes ports (80 and 443).
+# Apps join the external "proxy" network and get a route through labels.
+# They never publish ports of their own: Docker's published ports bypass ufw.
+#
+# On the server, in /srv/traefik:
+#   docker network create proxy        # once per server
+#   cp .env.example .env && $EDITOR .env
+#   docker compose up -d && docker compose logs -f traefik
+
+services:
+  traefik:
+    image: traefik:v3.7.16@sha256:1336e85aaed293bd63d005086e0dd013b04078b26aaeb1c18b26a2f928af7e65
+    command:
+      - --log.level=INFO
+      - --providers.docker=true
+      - --providers.docker.exposedbydefault=false
+      - --providers.docker.network=proxy
+      - --entrypoints.web.address=:80
+      - --entrypoints.web.http.redirections.entrypoint.to=websecure
+      - --entrypoints.web.http.redirections.entrypoint.scheme=https
+      - --entrypoints.websecure.address=:443
+      - --certificatesresolvers.le.acme.httpchallenge=true
+      - --certificatesresolvers.le.acme.httpchallenge.entrypoint=web
+      - --certificatesresolvers.le.acme.email=${ACME_EMAIL:?set ACME_EMAIL in .env}
+      - --certificatesresolvers.le.acme.storage=/letsencrypt/acme.json
+      - --certificatesresolvers.le.acme.caserver=${ACME_CA_SERVER:-https://acme-v02.api.letsencrypt.org/directory}
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      # Read-only helps less than it sounds: the socket API is root on the host either way.
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./letsencrypt:/letsencrypt
+    security_opt:
+      - no-new-privileges:true
+    networks: [proxy]
+    restart: unless-stopped
+
+networks:
+  proxy:
+    external: true

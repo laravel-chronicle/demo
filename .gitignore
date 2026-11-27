@@ -23,3 +23,6 @@ yarn-error.log
 /.vscode
 /.zed
 /docs
+
+# Traefik certificates if deploy/traefik is run from a checkout
+/deploy/traefik/letsencrypt/
